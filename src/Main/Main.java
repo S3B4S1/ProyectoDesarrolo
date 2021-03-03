@@ -25,7 +25,7 @@ public class Main {
           try {
               Negocio negocio = new Negocio(1020L, "PCREADY");
               Cliente cl = new Cliente(3136433711L, "sebastianjaramillo"
-                      + "24@gmail.com", 1006210148L, "Sebastian", "Jaramillo");
+                      + "24@gmail.com", 1006210148L, "JOAN", "TERRANUTRA");
               
               
               Computador pc = new Computador("HP", "123456A",TipoComputador.Escritorio, cl);

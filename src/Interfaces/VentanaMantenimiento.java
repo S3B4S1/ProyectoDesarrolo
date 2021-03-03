@@ -7,6 +7,7 @@ package Interfaces;
 
 import Clases.Computador;
 import Clases.Negocio;
+import Clases.TipoComputador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -60,7 +61,7 @@ private Negocio negocio;
         panelSerial = new javax.swing.JPanel();
         txtSerial = new javax.swing.JTextField();
         panelTipoEquipo = new javax.swing.JPanel();
-        comboTipoEquipo = new javax.swing.JComboBox<>();
+        comboTipoEquipo = new javax.swing.JComboBox(TipoComputador.values());
         panelMarca = new javax.swing.JPanel();
         comboMarca = new javax.swing.JComboBox<>();
         panelPropietario = new javax.swing.JPanel();
