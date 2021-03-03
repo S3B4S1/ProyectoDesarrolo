@@ -1,0 +1,49 @@
+package Clases;
+
+public class Computador {
+
+    private String marca;
+    private String serialEquipo;
+    private TipoComputador tipoComputador;
+    private Cliente propietario;
+
+    public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Cliente propietario) {
+        this.marca = marca;
+        this.serialEquipo = serialEquipo;
+        this.tipoComputador = tipoComputador;
+        this.propietario = propietario;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getSerialEquipo() {
+        return serialEquipo;
+    }
+
+    public TipoComputador getTipoComputador() {
+        return tipoComputador;
+    }
+
+    public Cliente getPropietario() {
+        return propietario;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setSerialEquipo(String serialEquipo) {
+        this.serialEquipo = serialEquipo;
+    }
+
+    public void setTipoComputador(TipoComputador tipoComputador) {
+        this.tipoComputador = tipoComputador;
+    }
+
+    public void setPropietario(Cliente propietario) {
+        this.propietario = propietario;
+    }
+
+}
