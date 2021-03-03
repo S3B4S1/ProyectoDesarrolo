@@ -25,10 +25,10 @@ public class Main {
           try {
               Negocio negocio = new Negocio(1020L, "PCREADY");
               Cliente cl = new Cliente(3136433711L, "sebastianjaramillo"
-                      + "24@gmail.com", 1006210148L, "JOAN", "TRIPLETERRANUTRA");
+                      + "24@gmail.com", 1006210148L, "JOAN", "TRIPLETERRANUTRAxd");
               
               
-              Computador pc = new Computador("HP", "123456A",TipoComputador.Escritorio, cl);
+              Computador pc = new Computador("HP", "123456A",TipoComputador.Portatil, cl);
           
               negocio.addCliente(cl);
               negocio.addPc(pc);
