@@ -29,7 +29,7 @@ public class Main {
               Cliente cl2 = new Cliente(3024261052L, "JoanRosero"
                       + "@gmail.com", 1006210148L, "Joan", "Rosero");
               
-              Computador pc = new Computador("HP", "123456A",TipoComputador.Portatil, cl);
+              Computador pc = new Computador("Hp", "123456A",TipoComputador.Portatil, cl);
               Computador pc1 = new Computador("Asus", "123456B",TipoComputador.Escritorio, cl2);
           
               negocio.addCliente(cl);

@@ -55,7 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ventanaAsignacionTecnico == null) {
-                    ventanaAsignacionTecnico = new VentanaAsignacionTecnico();
+                    ventanaAsignacionTecnico = new VentanaAsignacionTecnico(negocio);
                     jDesktopPane1.add(ventanaAsignacionTecnico);
                 }
                 ventanaAsignacionTecnico.setVisible(true);
@@ -88,6 +88,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         menuPrincipal = new javax.swing.JMenuBar();
         menuSolicitudes = new javax.swing.JMenu();
         menuNuevoIngreso = new javax.swing.JMenuItem();
@@ -100,16 +101,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1043, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
-        );
+        jDesktopPane1.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/cubos-digitales-3d-hd-870.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jDesktopPane1.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         menuPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         menuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -172,6 +168,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem menuAsignarInsumos;
     private javax.swing.JMenuItem menuAsignarTecnico;
     private javax.swing.JMenu menuAyuda;

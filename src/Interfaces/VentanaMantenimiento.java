@@ -18,28 +18,41 @@ import java.util.logging.Logger;
  * @author Shadow
  */
 public class VentanaMantenimiento extends javax.swing.JInternalFrame {
-private Negocio negocio;
+
+    private Negocio negocio;
+
     /**
      * Creates new form VentanaMantenimiento
      */
     public VentanaMantenimiento(Negocio negocio) {
         this.negocio = negocio;
         initComponents();
+        btnRegistrarEquipo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                String Serial = txtSerial.getText();
+                String Marca = (String) comboMarca.getSelectedItem();
+                String Tipo = (String) comboTipoEquipo.getSelectedItem();
+                String Nombre = txtNombres.getText();
+                String Apellidos = txtApellidos.getText();
+
+            }
+        });
         txtSerial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
                     String serial = txtSerial.getText();
-                    
-                    Computador computador = negocio.FindPc(serial);  
+
+                    Computador computador = negocio.FindPc(serial);
                     comboMarca.setSelectedItem(computador.getMarca());
                     comboTipoEquipo.setSelectedItem(computador.getTipoComputador());
                     txtIdentificacion.setText(Long.toString(computador.getPropietario().getIdentificacion()));
                     txtNombres.setText(computador.getPropietario().getNombre());
                     txtApellidos.setText(computador.getPropietario().getApellido());
                     txtTelefono.setText(Long.toString(computador.getPropietario().getTelefono()));
-                    
-  
+
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -129,6 +142,8 @@ private Negocio negocio;
         );
 
         panelMarca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Marca"));
+
+        comboMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hp", "Samsgung", "Asus", "MsI", "Generico", "Acer", "Lenovo", "Dell", "Sony", "Gi" }));
 
         javax.swing.GroupLayout panelMarcaLayout = new javax.swing.GroupLayout(panelMarca);
         panelMarca.setLayout(panelMarcaLayout);
