@@ -5,17 +5,41 @@
  */
 package Interfaces;
 
+import Clases.Computador;
+import Clases.Negocio;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Shadow
  */
 public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
+    private Negocio negocio;
 
     /**
      * Creates new form VentanaAsignacaion
      */
-    public VentanaAsignacionConsumos() {
+    public VentanaAsignacionConsumos(Negocio negocio) {
+        this.negocio = negocio;
         initComponents();
+        txtSerial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) { 
+                try {
+                    String serial = txtSerial.getText();
+                    
+                    Computador computador = negocio.FindPc(serial);
+                    
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
     }
 
     /**
