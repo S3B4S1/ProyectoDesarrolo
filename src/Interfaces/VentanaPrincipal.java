@@ -42,7 +42,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ventanaAsignacionConsumos == null) {
-                    ventanaAsignacionConsumos = new VentanaAsignacionConsumos();
+                    ventanaAsignacionConsumos = new VentanaAsignacionConsumos(negocio);
                     jDesktopPane1.add(ventanaAsignacionConsumos);
                 }
                 ventanaAsignacionConsumos.setVisible(true);
