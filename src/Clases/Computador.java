@@ -46,4 +46,10 @@ public class Computador {
         this.propietario = propietario;
     }
 
+    @Override
+    public String toString() {
+        return "marca:   " + marca + "  serialEquipo:  " + serialEquipo + "  tipoComputador:  " + tipoComputador;
+    }
+
+    
 }

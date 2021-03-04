@@ -113,6 +113,15 @@ public class Negocio {
         this.computadores = computadores;
     }
     
+    public void setMantPend(Mantenimiento mant) {
+        this.mantenimientosP.remove(mant);
+        this.mantenimientosP.add(mant);
+    }
+    
+    public void setMecanico(Persona tec) {
+        this.tecnicos.remove(tec);
+        this.tecnicos.add(tec);
+    }
 
     public Computador FindPc (String Serial) throws Exception{
         for (Computador comp : computadores) {
@@ -138,6 +147,17 @@ public class Negocio {
         this.clientes.add(cl);
     }
     
+    public void addTecnico(Persona tec) throws Exception{
+        if(tecnicos.contains(tec)) {
+            throw new Exception("El tecnico ya se encuentra registrado");
+        }
+        this.tecnicos.add(tec);
+    }
+    
+    public void addMantenimiento(Mantenimiento mant) {
+        this.mantenimientosP.add(mant);
+    }
+    
     public List MantSinTecnicos () {
         
         List list = new ArrayList();
@@ -151,16 +171,15 @@ public class Negocio {
     }
 
     public List TecnicosDisp() {
-        List listT = this.tecnicos;
         
-        List list = new ArrayList();
+        ArrayList listTD = new ArrayList();
         
-        for (Mantenimiento mant : this.mantenimientosP) {
-            
-            list.add(mant.getTecnico());
+        for (Persona tec : this.tecnicos) {
+            if (tec.getEstaDisp().equals(tec.getEstaDisp().Si)) {
+                listTD.add(tec);
+            }
         }
-        listT.removeAll(list);
-        
-        return listT;
+        return listTD;
     }
+    
 }

@@ -1,7 +1,6 @@
 package Clases;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Mantenimiento {
@@ -12,9 +11,9 @@ public class Mantenimiento {
     private Persona tecnico;
     private LocalDate fecha;
 
-    public Mantenimiento(Computador computador, Persona tecnico, LocalDate fecha) {
+    public Mantenimiento(Computador computador, Persona tecnico) {
         this.computador = computador;
-        this.tecnico = tecnico;
+        this.tecnico = null;
         this.fecha = LocalDate.now();
     }
 
@@ -56,5 +55,20 @@ public class Mantenimiento {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+    
+    public void addServicio(Servicio ser) {
+        this.servicios.add(ser);
+    }
+    
+    public String Servicios() {
+        
+        String servicio = "";
+        
+        for (Servicio ser : this.servicios) {
+            servicio += ser.toString() + ", ";
+        }
+        
+        return servicio;
     }
 }

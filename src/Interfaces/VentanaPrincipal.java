@@ -50,6 +50,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         menuAsignarTecnico.addActionListener(new ActionListener() {
+            
             private VentanaAsignacionTecnico ventanaAsignacionTecnico = null;
 
             @Override
@@ -59,8 +60,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     jDesktopPane1.add(ventanaAsignacionTecnico);
                 }
                 ventanaAsignacionTecnico.setVisible(true);
+                ventanaAsignacionTecnico.ActualizarTab();
+                ventanaAsignacionTecnico.ActualizarTec();
             }
         });
+        
         menuNuevoIngreso.addActionListener(new ActionListener() {
             private VentanaMantenimiento ventanaMantenimiento = null;
 

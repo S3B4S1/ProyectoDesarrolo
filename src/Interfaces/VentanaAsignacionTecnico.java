@@ -4,6 +4,11 @@ import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Persona;
 import java.awt.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
@@ -16,13 +21,16 @@ import javax.swing.table.TableModel;
 public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
 
     private Negocio negocio;
-    private List tecnicos;
+    private ArrayList tecnicos;
 
     public VentanaAsignacionTecnico(Negocio negocio) {
         this.negocio = negocio;
-        this.tecnicos = negocio.MantSinTecnicos()
+        this.tecnicos = (ArrayList) negocio.TecnicosDisp();
 
         initComponents();
+        
+        tablaMantenimientos.updateUI();
+        comboTecnicos.updateUI();
 
         tablaMantenimientos.setModel(new TableModel() {
 
@@ -75,7 +83,7 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
                     case 0:
                         return mant.getComputador().toString();
                     case 1:
-                        return mant.getConsumo().getServicio().toString();
+                        return mant.Servicios();
                     default:
                         return "";
                 }
@@ -115,16 +123,63 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
 
             @Override
             public Persona getElementAt(int index) {
+                return (Persona) tecnicos.get(index);
             }
 
             @Override
             public void addListDataListener(ListDataListener l) {
             }
-
             @Override
             public void removeListDataListener(ListDataListener l) {
             }
         });
+        
+        btnAsignarTecnico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Persona tec = (Persona) comboTecnicos.getSelectedItem();
+                
+                if (tec == null) {
+                    try {
+                        throw new Exception("Debe seleccionar el tecnico que realizara el ");
+                    } catch (Exception ex) {
+                        Logger.getLogger(VentanaAsignacionTecnico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                tec.setEstaDisp(Persona.EstaDisp.No);
+                
+                Mantenimiento mant = (Mantenimiento) negocio.MantSinTecnicos().get(tablaMantenimientos.getSelectedRow());
+                
+                mant.setTecnico(tec);
+                
+                negocio.setMantPend(mant);
+                negocio.setMecanico(tec);
+                
+                tecnicos = (ArrayList) negocio.TecnicosDisp();
+                tablaMantenimientos.updateUI();
+                comboTecnicos.setSelectedIndex(-1);
+                comboTecnicos.updateUI();
+            }
+        });
+        
+        btnActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ActualizarTab();
+                ActualizarTec();
+            }
+        });
+    }
+    
+    public void ActualizarTab() {
+        tablaMantenimientos.updateUI();
+    }
+    
+    public void ActualizarTec() {
+        comboTecnicos.updateUI();
+        tecnicos = (ArrayList) negocio.TecnicosDisp();
     }
 
     @SuppressWarnings("unchecked")

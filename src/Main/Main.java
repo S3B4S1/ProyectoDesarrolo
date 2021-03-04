@@ -7,9 +7,15 @@ package Main;
 
 import Clases.Cliente;
 import Clases.Computador;
+import Clases.Consumo;
+import Clases.Mantenimiento;
 import Clases.Negocio;
+import Clases.Persona;
+import Clases.Producto;
+import Clases.Servicio;
 import Clases.TipoComputador;
 import Interfaces.VentanaPrincipal;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +37,32 @@ public class Main {
               
               Computador pc = new Computador("Hp", "123456A",TipoComputador.Portatil, cl);
               Computador pc1 = new Computador("Asus", "123456B",TipoComputador.Escritorio, cl2);
-          
+              
+              Persona t1 = new Persona(1234567, "Tecnico", "1");
+              Persona t2 = new Persona(1234568, "Tecnico", "2");
+              Persona t3 = new Persona(1234569, "Tecnico", "3");
+              
+              Servicio s1 = new Servicio(1111, "Instalacion Windows 10", 50000);
+              
+              Producto p1 = new Producto(11111, "Windows 10", 100000);
+              
+              Consumo co1 = new Consumo(1, s1, p1);
+              
+              Mantenimiento m1 = new Mantenimiento(pc1, t3);
+              
+              m1.addServicio(s1);
+              
+              t1.setEstaDisp(Persona.EstaDisp.Si);
+              t2.setEstaDisp(Persona.EstaDisp.No);
+              t3.setEstaDisp(Persona.EstaDisp.Si);
+              
+              
+              negocio.addMantenimiento(m1);
+              
+              negocio.addTecnico(t1);
+              negocio.addTecnico(t2);
+              negocio.addTecnico(t3);
+
               negocio.addCliente(cl);
               negocio.addCliente(cl2);
               negocio.addPc(pc);

@@ -1,10 +1,15 @@
 package Clases;
 
 public class Persona {
+    
+    public static enum EstaDisp{
+        Si, No
+    }
 
     private long identificacion;
     private String nombre;
     private String apellido;
+    private EstaDisp estaDisp;
     
 
     public Persona(long identificacion, String nombre, String apellido) {
@@ -37,7 +42,19 @@ public class Persona {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
-    
 
+    public EstaDisp getEstaDisp() {
+        return estaDisp;
+    }
+
+    public void setEstaDisp(EstaDisp estaDisp) {
+        this.estaDisp = estaDisp;
+    }
+
+    @Override
+    public String toString() {
+        return identificacion + "  " + nombre + "  " + apellido;
+    }
+    
+    
 }
