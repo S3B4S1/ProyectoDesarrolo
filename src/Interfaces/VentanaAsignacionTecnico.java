@@ -1,7 +1,11 @@
 package Interfaces;
 
+import Clases.Mantenimiento;
 import Clases.Negocio;
+import Clases.Persona;
 import java.awt.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -10,65 +14,119 @@ import javax.swing.table.TableModel;
  * @author Shadow
  */
 public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
-    
+
     private Negocio negocio;
     private List tecnicos;
 
     public VentanaAsignacionTecnico(Negocio negocio) {
         this.negocio = negocio;
-        
-        
+        this.tecnicos = negocio.MantSinTecnicos()
+
         initComponents();
-        
+
         tablaMantenimientos.setModel(new TableModel() {
-            
+
             public int getRowCount() {
-                return 
+                return negocio.MantSinTecnicos().size();
             }
 
             @Override
             public int getColumnCount() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                return 2;
             }
 
             @Override
             public String getColumnName(int columnIndex) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+                switch (columnIndex) {
+                    case 0:
+                        return "Computador";
+                    case 1:
+                        return "Servicio(s)";
+                    default:
+                        return "";
+                }
             }
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+                switch (columnIndex) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    default:
+                        return String.class;
+                }
             }
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                return false;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+                Mantenimiento mant = (Mantenimiento) negocio.MantSinTecnicos().get(rowIndex);
+
+                switch (columnIndex) {
+                    case 0:
+                        return mant.getComputador().toString();
+                    case 1:
+                        return mant.getConsumo().getServicio().toString();
+                    default:
+                        return "";
+                }
             }
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
             public void addTableModelListener(TableModelListener l) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
             public void removeTableModelListener(TableModelListener l) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
+        comboTecnicos.setModel(new ComboBoxModel<Persona>() {
+            
+            Persona tecnico;
+            
+            @Override
+            public void setSelectedItem(Object anItem) {
+                this.tecnico = (Persona) anItem;
+            }
+
+            @Override
+            public Object getSelectedItem() {
+                return this.tecnico;
+            }
+
+            @Override
+            public int getSize() {
+                return tecnicos.size();
+            }
+
+            @Override
+            public Persona getElementAt(int index) {
+            }
+
+            @Override
+            public void addListDataListener(ListDataListener l) {
+            }
+
+            @Override
+            public void removeListDataListener(ListDataListener l) {
             }
         });
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -178,11 +236,10 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAsignarTecnico;
-    private javax.swing.JComboBox<String> comboTecnicos;
+    private javax.swing.JComboBox<Persona> comboTecnicos;
     private javax.swing.JPanel panelListaMantenimientos;
     private javax.swing.JPanel panelTecnicos;
     private javax.swing.JScrollPane scrollMantenimientos;

@@ -1,6 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Negocio {
 
@@ -11,7 +12,8 @@ public class Negocio {
     private ArrayList<Venta> ventas;
     private ArrayList<Persona> tecnicos;
     private ArrayList<Cliente> clientes;
-    private ArrayList<Mantenimiento> mantenimientos;
+    private ArrayList<Mantenimiento> mantenimientosR;
+    private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
             
             
@@ -25,7 +27,8 @@ public class Negocio {
         this.ventas = new ArrayList<>();
         this.tecnicos = new ArrayList<>();
         this.clientes = new ArrayList<>();
-        this.mantenimientos = new ArrayList<>();
+        this.mantenimientosR = new ArrayList<>();
+        this.mantenimientosP = new ArrayList<>();
         this.computadores = new ArrayList<>();
         
     }
@@ -58,10 +61,6 @@ public class Negocio {
         return clientes;
     }
 
-    public ArrayList<Mantenimiento> getMantenimientos() {
-        return mantenimientos;
-    }
-
     public void setNit(long nit) {
         this.nit = nit;
     }
@@ -90,10 +89,31 @@ public class Negocio {
         this.clientes = clientes;
     }
 
-    public void setMantenimientos(ArrayList<Mantenimiento> mantenimientos) {
-        this.mantenimientos = mantenimientos;
+    public ArrayList<Mantenimiento> getMantenimientosR() {
+        return mantenimientosR;
+    }
+
+    public void setMantenimientosR(ArrayList<Mantenimiento> mantenimientosR) {
+        this.mantenimientosR = mantenimientosR;
+    }
+
+    public ArrayList<Mantenimiento> getMantenimientosP() {
+        return mantenimientosP;
+    }
+
+    public void setMantenimientosP(ArrayList<Mantenimiento> mantenimientosP) {
+        this.mantenimientosP = mantenimientosP;
+    }
+
+    public ArrayList<Computador> getComputadores() {
+        return computadores;
+    }
+
+    public void setComputadores(ArrayList<Computador> computadores) {
+        this.computadores = computadores;
     }
     
+
     public Computador FindPc (String Serial) throws Exception{
         for (Computador comp : computadores) {
            if( comp.getSerialEquipo().equals(Serial)){
@@ -118,6 +138,29 @@ public class Negocio {
         this.clientes.add(cl);
     }
     
-    public List MantSinTecnicos ()
+    public List MantSinTecnicos () {
+        
+        List list = new ArrayList();
+        
+        for (Mantenimiento mant : this.mantenimientosP) {
+            if (mant.getTecnico() == null) {
+                list.add(mant);
+            }
+        }
+        return list;
+    }
 
+    public List TecnicosDisp() {
+        List listT = this.tecnicos;
+        
+        List list = new ArrayList();
+        
+        for (Mantenimiento mant : this.mantenimientosP) {
+            
+            list.add(mant.getTecnico());
+        }
+        listT.removeAll(list);
+        
+        return listT;
+    }
 }
