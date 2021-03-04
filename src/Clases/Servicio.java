@@ -36,4 +36,9 @@ public class Servicio {
         this.costo = costo;
     }
 
+    @Override
+    public String toString() {
+        return "Codigo: " + codigo + ", Nombre: " + nombre + ", Costo del servicio: " + costo;
+    }
+
 }
