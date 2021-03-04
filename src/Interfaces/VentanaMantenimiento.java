@@ -36,8 +36,8 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                 try {
                     String Serial = txtSerial.getText();
                     String Marca = (String) comboMarca.getSelectedItem();
-                    TipoComputador Tipo =  (TipoComputador) comboTipoEquipo.getSelectedItem();
-                    Long Identificacion = Long.parseLong( txtIdentificacion.getText());
+                    TipoComputador Tipo = (TipoComputador) comboTipoEquipo.getSelectedItem();
+                    Long Identificacion = Long.parseLong(txtIdentificacion.getText());
                     String Nombre = txtNombres.getText();
                     String Apellidos = txtApellidos.getText();
                     Long Telefono = Long.parseLong(txtTelefono.getText());
@@ -75,23 +75,25 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     txtTelefono.setText(Long.toString(computador.getPropietario().getTelefono()));
                     txtCorreo.setText(computador.getPropietario().getCorreo());
 
-                } catch (Exception ex) 
-                    {
-                    if (JOptionPane.showOptionDialog(VentanaMantenimiento.this, "No se encontro el equipo \n ¿Desea registrar un nuevo equipo?",
-                            "ERROR", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 1) {
-                        txtSerial.setText("");
-                        
-                        
-                    } else {
+                } catch (Exception ex) {
+                    Object[] opciones = {"Si, por favor", "No gracias"};
+                    int decision = JOptionPane.showOptionDialog(VentanaMantenimiento.this, "El equipo no se encuentra registrado\n¿Desea registrarlo?", "Registro",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, "Si, por favor");
+
+                    if (decision == JOptionPane.OK_OPTION) {
                         comboMarca.enable(true);
                         comboTipoEquipo.enable(true);
-                        
-                        
+                        comboServicios.enable(true);
+                        txtIdentificacion.enable(true);
+                        txtNombres.enable(true);
+                        txtApellidos.enable(true);
+                        txtTelefono.enable(true);
+                    } else {
+                        JOptionPane.showMessageDialog(VentanaMantenimiento.this, "Operacion abortada");
                     }
                     Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    
-                
+
             }
         });
     }
