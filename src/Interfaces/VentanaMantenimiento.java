@@ -2,6 +2,7 @@ package Interfaces;
 
 import Clases.Cliente;
 import Clases.Computador;
+import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Servicio;
 import Clases.TipoComputador;
@@ -12,19 +13,80 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 public class VentanaMantenimiento extends javax.swing.JInternalFrame {
 
     private Negocio negocio;
+    private Mantenimiento mantenimiento;
     private ArrayList<Servicio> servicios;
     private ArrayList<Servicio> serviciosLista;
 
     public VentanaMantenimiento(Negocio negocio) {
         this.negocio = negocio;
+        this.mantenimiento = mantenimiento;
         this.servicios = negocio.getServicios();
         this.serviciosLista = new ArrayList<>();
+        
         initComponents();
+
+        btnIngresarMantenimiento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                try {
+                    Computador computador = negocio.FindPc(txtSerial.getText());
+
+                    mantenimiento = new Mantenimiento(computador, null);
+
+                    mantenimiento.setServicios(serviciosLista);
+
+                    negocio.addMantenimiento(mantenimiento);
+
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, "El mantenimiento fue agregado con exito");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
+                }
+            }
+        });
+
+        listServicios.setModel(new ListModel<String>() {
+            @Override
+            public int getSize() {
+                return serviciosLista.size();
+            }
+
+            @Override
+            public String getElementAt(int index) {
+                return serviciosLista.toString();
+            }
+
+            @Override
+            public void addListDataListener(ListDataListener ll) {
+            }
+
+            @Override
+            public void removeListDataListener(ListDataListener ll) {
+            }
+        });
+
+        btnAgregarServicio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                try {
+                    Servicio servicio = (Servicio) comboServicios.getSelectedItem();
+
+                    serviciosLista.add(servicio);
+
+                    listServicios.updateUI();
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
+                }
+            }
+        });
 
         comboServicios.setModel(new ComboBoxModel() {
 
@@ -75,16 +137,20 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     Computador pc = new Computador(Marca, Serial, Tipo, cl);
                     negocio.addCliente(cl);
                     negocio.addPc(pc);
-                    txtSerial.setText("");
-                    txtIdentificacion.setText("");
-                    txtNombres.setText("");
-                    txtApellidos.setText("");
-                    txtTelefono.setText("");
-                    txtCorreo.setText("");
-                    comboMarca.setSelectedItem(null);
-                    comboTipoEquipo.setSelectedItem(null);
+
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, "El equipo fue registrado con exito");
+
+                    txtSerial.enable(false);
+                    comboMarca.enable(false);
+                    comboTipoEquipo.enable(false);
+                    txtIdentificacion.enable(false);
+                    txtNombres.enable(false);
+                    txtApellidos.enable(false);
+                    txtTelefono.enable(false);
+                    txtCorreo.enable(false);
+
                 } catch (Exception ex) {
-                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
                 }
 
             }
@@ -111,18 +177,20 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
 
                     if (decision == JOptionPane.OK_OPTION) {
                         comboMarca.enable(true);
+                        comboMarca.updateUI();
                         comboTipoEquipo.enable(true);
+                        comboTipoEquipo.updateUI();
                         comboServicios.enable(true);
+                        comboServicios.updateUI();
                         txtIdentificacion.enable(true);
                         txtNombres.enable(true);
                         txtApellidos.enable(true);
                         txtTelefono.enable(true);
+                        txtCorreo.enable(true);
                     } else {
                         JOptionPane.showMessageDialog(VentanaMantenimiento.this, "Operacion abortada");
                     }
-                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
     }
@@ -394,12 +462,9 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     .addContainerGap()))
         );
 
-        panelCorreo.getAccessibleContext().setAccessibleName("Correo");
-
         btnRegistrarEquipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRegistrarEquipo.setText("Registrar Equipo");
         btnRegistrarEquipo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRegistrarEquipo.setEnabled(false);
 
         panelServicios.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Servicio(s) Solicitado(s)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 

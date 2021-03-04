@@ -13,7 +13,7 @@ public class Mantenimiento {
 
     public Mantenimiento(Computador computador, Persona tecnico) {
         this.computador = computador;
-        this.tecnico = null;
+        this.tecnico = tecnico;
         this.fecha = LocalDate.now();
     }
 

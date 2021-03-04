@@ -48,7 +48,7 @@ public class Main {
               
               Consumo co1 = new Consumo(1, s1, p1);
               
-              Mantenimiento m1 = new Mantenimiento(pc1, t3);
+              Mantenimiento m1 = new Mantenimiento(pc1, null);
               
               m1.addServicio(s1);
               
@@ -62,6 +62,7 @@ public class Main {
               negocio.addTecnico(t1);
               negocio.addTecnico(t2);
               negocio.addTecnico(t3);
+              negocio.addServicio(s1);
 
               negocio.addCliente(cl);
               negocio.addCliente(cl2);
