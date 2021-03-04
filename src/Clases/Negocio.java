@@ -15,9 +15,6 @@ public class Negocio {
     private ArrayList<Mantenimiento> mantenimientosR;
     private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
-            
-            
- 
 
     public Negocio(long nit, String nombre) {
         this.nit = nit;
@@ -30,7 +27,7 @@ public class Negocio {
         this.mantenimientosR = new ArrayList<>();
         this.mantenimientosP = new ArrayList<>();
         this.computadores = new ArrayList<>();
-        
+
     }
 
     public long getNit() {
@@ -112,36 +109,39 @@ public class Negocio {
     public void setComputadores(ArrayList<Computador> computadores) {
         this.computadores = computadores;
     }
-    
 
-    public Computador FindPc (String Serial) throws Exception{
+    public Computador FindPc(String Serial) throws Exception {
         for (Computador comp : computadores) {
-           if( comp.getSerialEquipo().equals(Serial)){
-               return comp;
-           }
+            if (comp.getSerialEquipo().equals(Serial)) {
+                return comp;
+            }
         }
-        throw  new Exception("El computador no se encuentra registrado en la base"
+        throw new Exception("El computador no se encuentra registrado en la base"
                 + "de datos");
     }
-    
-    public void addPc (Computador pc) throws Exception{
-       if( computadores.contains(pc)){
-           throw new Exception("El computador ya se encuentra registrado");
-       }
-       this.computadores.add(pc);
-       
+
+    public void addPc(Computador pc) throws Exception {
+        if (computadores.contains(pc)) {
+            throw new Exception("El computador ya se encuentra registrado");
+        }
+        this.computadores.add(pc);
+
     }
-    public void addCliente (Cliente cl) throws Exception{
-        if( clientes.contains(cl)){
+
+    public void addCliente(Cliente cl) throws Exception {
+        if (clientes.contains(cl)) {
             throw new Exception("El cliente ya se encuentra registrado");
         }
         this.clientes.add(cl);
     }
     
-    public List MantSinTecnicos () {
-        
+    public void addServicio (Servicio sv) throws Exception{
+       this.servicios.add(sv);
+    }
+    public List MantSinTecnicos() {
+
         List list = new ArrayList();
-        
+
         for (Mantenimiento mant : this.mantenimientosP) {
             if (mant.getTecnico() == null) {
                 list.add(mant);
@@ -152,15 +152,15 @@ public class Negocio {
 
     public List TecnicosDisp() {
         List listT = this.tecnicos;
-        
+
         List list = new ArrayList();
-        
+
         for (Mantenimiento mant : this.mantenimientosP) {
-            
+
             list.add(mant.getTecnico());
         }
         listT.removeAll(list);
-        
+
         return listT;
     }
 }
