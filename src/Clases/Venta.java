@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 public class Venta {
 
     private DetalleVenta detalleVenta;
-    private Cliente cliente;
+    private Persona cliente;
     private LocalDateTime fecha;
 
-    public Venta(DetalleVenta detalleVenta, Cliente cliente, LocalDateTime fecha) {
+    public Venta(DetalleVenta detalleVenta, Persona cliente, LocalDateTime fecha) {
         this.detalleVenta = detalleVenta;
         this.cliente = cliente;
         this.fecha = LocalDateTime.now();
@@ -18,7 +18,7 @@ public class Venta {
         return detalleVenta;
     }
 
-    public Cliente getCliente() {
+    public Persona getCliente() {
         return cliente;
     }
 
@@ -30,12 +30,11 @@ public class Venta {
         this.detalleVenta = detalleVenta;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Persona cliente) {
         this.cliente = cliente;
     }
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-
 }

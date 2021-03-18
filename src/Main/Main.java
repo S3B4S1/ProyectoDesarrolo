@@ -5,7 +5,6 @@
  */
 package Main;
 
-import Clases.Cliente;
 import Clases.Computador;
 import Clases.Consumo;
 import Clases.Mantenimiento;
@@ -30,17 +29,15 @@ public class Main {
       public static void main(String args[]) {
           try {
               Negocio negocio = new Negocio(1020L, "PCREADY");
-              Cliente cl = new Cliente(3136433711L, "sebastianjaramillo"
-                      + "24@gmail.com", 1006210148L, "sebastian", "Jaramillo");
-              Cliente cl2 = new Cliente(3024261052L, "JoanRosero"
-                      + "@gmail.com", 1006210148L, "Joan", "Rosero");
+              Persona cl = new Persona(11111111, "sebastian", "Jaramillo", "3136433711");
+              Persona cl2 = new Persona(11111112, "Joan", "Rosero", "3215469854");
               
               Computador pc = new Computador("Hp", "123456A",TipoComputador.Portatil, cl);
               Computador pc1 = new Computador("Asus", "123456B",TipoComputador.Escritorio, cl2);
               
-              Persona t1 = new Persona(1234567, "Tecnico", "1");
-              Persona t2 = new Persona(1234568, "Tecnico", "2");
-              Persona t3 = new Persona(1234569, "Tecnico", "3");
+              Persona t1 = new Persona(1234567, "Tecnico", "1", "3125469878");
+              Persona t2 = new Persona(1234568, "Tecnico", "2", "3654449878");
+              Persona t3 = new Persona(1234569, "Tecnico", "3", "3122229878");
               
               Servicio s1 = new Servicio(1111, "Instalacion Windows 10", 50000);
               

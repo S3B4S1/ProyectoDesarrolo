@@ -36,4 +36,8 @@ public class Producto {
         this.costo = costo;
     }
 
+    @Override
+    public String toString() {
+        return codigo + "  " + nombre + "  costo : " + costo;
+    }
 }

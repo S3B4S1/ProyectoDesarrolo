@@ -36,4 +36,8 @@ public class Consumo {
         this.producto = producto;
     }
 
+    @Override
+    public String toString() {
+        return producto + "  Cantidad : " + cantidad;
+    }
 }

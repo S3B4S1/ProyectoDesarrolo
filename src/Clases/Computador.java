@@ -5,9 +5,9 @@ public class Computador {
     private String marca;
     private String serialEquipo;
     private TipoComputador tipoComputador;
-    private Cliente propietario;
+    private Persona propietario;
 
-    public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Cliente propietario) {
+    public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Persona propietario) {
         this.marca = marca;
         this.serialEquipo = serialEquipo;
         this.tipoComputador = tipoComputador;
@@ -26,7 +26,7 @@ public class Computador {
         return tipoComputador;
     }
 
-    public Cliente getPropietario() {
+    public Persona getPropietario() {
         return propietario;
     }
 
@@ -42,7 +42,7 @@ public class Computador {
         this.tipoComputador = tipoComputador;
     }
 
-    public void setPropietario(Cliente propietario) {
+    public void setPropietario(Persona propietario) {
         this.propietario = propietario;
     }
 
@@ -50,6 +50,4 @@ public class Computador {
     public String toString() {
         return "marca:   " + marca + "  serialEquipo:  " + serialEquipo + "  tipoComputador:  " + tipoComputador;
     }
-
-    
 }
