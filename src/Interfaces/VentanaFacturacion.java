@@ -1,7 +1,7 @@
 package Interfaces;
 
-import Clases.Computador;
 import Clases.Consumo;
+import Clases.DetalleVenta;
 import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Persona;
@@ -23,7 +23,8 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private Negocio negocio;
     private ArrayList servicios = new ArrayList();
     private ArrayList consumos = new ArrayList();
-
+    private ArrayList detalleVentas = new ArrayList();
+    
     public VentanaFacturacion(Negocio negocio) {
         this.negocio = negocio;
 
@@ -46,6 +47,10 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                     // }
                     listServicios.updateUI();
                     listConsumos.updateUI();
+                    
+                    txtTotal.setText(Integer.toString(mant.getCostoTotalMant()));
+                    txtIVA.setText(Integer.toString((int) (mant.getCostoTotalMant() * 0.19)));
+                    txtSubtotal.setText(Integer.toString((int) ((mant.getCostoTotalMant() - (mant.getCostoTotalMant() * 0.19)))));
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -81,7 +86,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 long Ident = Long.parseLong(txtIdentificacion.getText());
                 try {
                     Persona cliente = negocio.findCliente(Ident);
-
+                    
                     txtNombres.setText(cliente.getNombre());
                     txtApellidos.setText(cliente.getApellido());
                     txtTelefono.setText(cliente.getTelefono());
@@ -101,6 +106,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                     String telefono = txtTelefono.getText();
                     
                     Persona cliente = new Persona(ident, nombre, apellido, telefono);
+                    
                     
                     negocio.addCliente(cliente);
                 } catch (Exception ex) {
@@ -122,6 +128,49 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        });
+        
+        btnAgregarProducto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                try {
+                    int cod = Integer.parseInt(txtCodigoProducto.getText());
+                    int cant = Integer.parseInt(txtCantidad.getText());
+                    
+                    Producto prod = negocio.findProducto(cod);
+                    
+                    DetalleVenta dV = new DetalleVenta(cant, prod);
+                    
+                    detalleVentas.add(dV);
+                    
+                    //txtTotal.setText(Integer.toString(venta.getCostoVentaTotal()));
+                    //txtIVA.setText(Integer.toString((int) (venta.getCostoVentaTotal() * 0.19)));
+                    //txtSubtotal.setText(Integer.toString((int) (venta.getCostoVentaTotal() - (venta.getCostoVentaTotal() * 0.19))));
+                    
+                    listProductos.updateUI();
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        listProductos.setModel(new AbstractListModel<DetalleVenta>() {
+            
+            public int getSize() {
+                return detalleVentas.size();
+            }
+
+            public DetalleVenta getElementAt(int index) {
+                return (DetalleVenta) detalleVentas.get(index);
+            }
+        });
+        
+        btnFacturar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                
             }
         });
     }
@@ -169,9 +218,9 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
         panelCantidadInsumo = new javax.swing.JPanel();
         txtCantidad = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
-        scrollProductos = new javax.swing.JScrollPane();
-        tablaProductos = new javax.swing.JTable();
         btnDevolver = new javax.swing.JButton();
+        scrollServicios2 = new javax.swing.JScrollPane();
+        listProductos = new javax.swing.JList<>();
         panelCostos = new javax.swing.JPanel();
         panelSubtotal = new javax.swing.JPanel();
         txtSubtotal = new javax.swing.JTextField();
@@ -581,7 +630,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
         );
 
         btnAgregarProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnAgregarProducto.setText("Agregar Consumo");
+        btnAgregarProducto.setText("Agregar Producto");
         btnAgregarProducto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout panelRegistroConsumoLayout = new javax.swing.GroupLayout(panelRegistroConsumo);
@@ -616,34 +665,24 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        scrollProductos.setViewportView(tablaProductos);
-
         btnDevolver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDevolver.setText("Devolver");
         btnDevolver.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        listProductos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        scrollServicios2.setViewportView(listProductos);
 
         javax.swing.GroupLayout panelVentaLayout = new javax.swing.GroupLayout(panelVenta);
         panelVenta.setLayout(panelVentaLayout);
         panelVentaLayout.setHorizontalGroup(
             panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVentaLayout.createSequentialGroup()
+            .addGroup(panelVentaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnDevolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelPropietario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRegistroConsumo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
-                    .addComponent(scrollProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE))
+                .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDevolver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelPropietario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelRegistroConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 535, Short.MAX_VALUE)
+                    .addComponent(scrollServicios2))
                 .addContainerGap())
         );
         panelVentaLayout.setVerticalGroup(
@@ -653,9 +692,9 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 .addComponent(panelPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRegistroConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollServicios2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(btnDevolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
@@ -807,6 +846,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JComboBox<String> comboEleccion;
     private javax.swing.JList<Consumo> listConsumos;
+    private javax.swing.JList<DetalleVenta> listProductos;
     private javax.swing.JList<Servicio> listServicios;
     private javax.swing.JPanel panelApellidos;
     private javax.swing.JPanel panelCantidadInsumo;
@@ -831,10 +871,9 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelTipoEquipo;
     private javax.swing.JPanel panelTotal;
     private javax.swing.JPanel panelVenta;
-    private javax.swing.JScrollPane scrollProductos;
     private javax.swing.JScrollPane scrollServicios;
     private javax.swing.JScrollPane scrollServicios1;
-    private javax.swing.JTable tablaProductos;
+    private javax.swing.JScrollPane scrollServicios2;
     private javax.swing.JLabel textTitulo;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCantidad;

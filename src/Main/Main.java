@@ -51,6 +51,7 @@ public class Main {
               
               m1.addServicio(s1);
               
+              
               t1.setEstaDisp(Persona.EstaDisp.Si);
               t2.setEstaDisp(Persona.EstaDisp.No);
               t3.setEstaDisp(Persona.EstaDisp.Si);

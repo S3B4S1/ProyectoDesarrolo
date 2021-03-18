@@ -6,9 +6,9 @@ public class DetalleVenta {
     private float costoTotal;
     private Producto producto;
 
-    public DetalleVenta(int cantidad, float costoTotal, Producto producto) {
+    public DetalleVenta(int cantidad, Producto producto) {
         this.cantidad = cantidad;
-        this.costoTotal = costoTotal;
+        this.costoTotal = cantidad * producto.getCosto();
         this.producto = producto;
     }
 
@@ -36,4 +36,8 @@ public class DetalleVenta {
         this.producto = producto;
     }
 
+    @Override
+    public String toString() {
+        return producto + "  Cantidad: " + cantidad + "  CostoTotal: " + costoTotal;
+    }
 }

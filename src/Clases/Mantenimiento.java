@@ -10,6 +10,9 @@ public class Mantenimiento {
     private Computador computador;
     private Persona tecnico;
     private LocalDate fecha;
+    private int costoConsumos = 0;
+    private int costoServicios = 0;
+    private int CostoTotalMant;
 
     public Mantenimiento(Computador computador, Persona tecnico) {
         this.computador = computador;
@@ -74,5 +77,29 @@ public class Mantenimiento {
         }
 
         return servicio;
+    }
+
+    public int getCostoConsumos() {
+        
+        int a = 0;
+        
+        for (Consumo con : this.consumos) {
+            a += con.getCostoTotalCons();
+        }
+        return costoConsumos = a;
+    }
+
+    public int getCostoServicios() {
+        
+        int a = 0;
+                
+        for (Servicio ser : this.servicios) {
+            a += ser.getCosto();
+        }
+        return costoServicios = a;
+    }
+
+    public int getCostoTotalMant() {
+        return CostoTotalMant = getCostoConsumos() + getCostoServicios();
     }
 }
