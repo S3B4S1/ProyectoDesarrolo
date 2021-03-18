@@ -210,5 +210,13 @@ public class Negocio {
         }
         throw new Exception("No se encontro el producto con el codigo ingresado");
     }
-
+    
+    public Persona findCliente(long ident) throws Exception {
+        
+        for (Persona cliente : this.clientes)
+            if (cliente.getIdentificacion() == ident) {
+                return cliente;
+            }
+        throw new Exception("No se encontro el cliente");
+    }
 }

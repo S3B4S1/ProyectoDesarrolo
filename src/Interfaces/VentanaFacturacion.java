@@ -1,12 +1,17 @@
 package Interfaces;
 
 import Clases.Computador;
+import Clases.Consumo;
 import Clases.Mantenimiento;
 import Clases.Negocio;
+import Clases.Persona;
+import Clases.Servicio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractListModel;
 
 /**
  *
@@ -15,24 +20,98 @@ import java.util.logging.Logger;
 public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
     private Negocio negocio;
-    
+    private ArrayList servicios = new ArrayList();
+    private ArrayList consumos = new ArrayList();
+
     public VentanaFacturacion(Negocio negocio) {
         this.negocio = negocio;
-        
+
         initComponents();
-        
+
         txtSerial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
                 try {
                     String serial = txtSerial.getText();
                     Mantenimiento mant = negocio.findMantPend(serial);
-                   // txtMarca.setText(computador.getMarca());
-                   // txtTipoEquipo.setText(computador.getTipoComputador().name());
-                    
+                    txtMarca.setText(mant.getComputador().getMarca());
+                    txtTipoEquipo.setText(mant.getComputador().getTipoComputador().name());
+
+                    servicios = mant.getServicios();
+                    consumos = mant.getConsumos();
+
+                    //if (mant.getTecnico() == null) {
+                    // throw new Exception("No se puede facturar un mantenimiento sin mecanico");
+                    // }
+                    listServicios.updateUI();
+                    listConsumos.updateUI();
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        });
+
+        listServicios.setModel(new AbstractListModel<Servicio>() {
+
+            public int getSize() {
+                return servicios.size();
+            }
+
+            public Servicio getElementAt(int index) {
+                return (Servicio) servicios.get(index);
+            }
+        });
+
+        listConsumos.setModel(new AbstractListModel<Consumo>() {
+
+            public int getSize() {
+                return consumos.size();
+            }
+
+            @Override
+            public Consumo getElementAt(int index) {
+                return (Consumo) consumos.get(index);
+            }
+        });
+
+        btnBuscarCliente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                long Ident = Long.parseLong(txtIdentificacion.getText());
+                try {
+                    Persona cliente = negocio.findCliente(Ident);
+
+                    txtNombres.setText(cliente.getNombre());
+                    txtApellidos.setText(cliente.getApellido());
+                    txtTelefono.setText(cliente.getTelefono());
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        btnRegistrarCliente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                try {
+                    long ident = Long.parseLong(txtIdentificacion.getText());
+                    String nombre = txtNombres.getText();
+                    String apellido = txtApellidos.getText();
+                    String telefono = txtTelefono.getText();
+                    
+                    Persona cliente = new Persona(ident, nombre, apellido, telefono);
+                    
+                    negocio.addCliente(cliente);
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        txtCodigoProducto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                
             }
         });
     }
@@ -56,8 +135,8 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
         scrollServicios = new javax.swing.JScrollPane();
         listServicios = new javax.swing.JList<>();
         panelConsumos = new javax.swing.JPanel();
-        scrollConsumos = new javax.swing.JScrollPane();
-        tablaConsumos = new javax.swing.JTable();
+        scrollServicios1 = new javax.swing.JScrollPane();
+        listConsumos = new javax.swing.JList<>();
         panelVenta = new javax.swing.JPanel();
         panelPropietario = new javax.swing.JPanel();
         panelIdentificacion = new javax.swing.JPanel();
@@ -102,6 +181,8 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
         panelEleccion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Que Desea Facturar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         panelEleccion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        comboEleccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mantenimiento", "Venta" }));
 
         javax.swing.GroupLayout panelEleccionLayout = new javax.swing.GroupLayout(panelEleccion);
         panelEleccion.setLayout(panelEleccionLayout);
@@ -233,18 +314,8 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
         panelConsumos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Consumos Registrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        tablaConsumos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        scrollConsumos.setViewportView(tablaConsumos);
+        listConsumos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        scrollServicios1.setViewportView(listConsumos);
 
         javax.swing.GroupLayout panelConsumosLayout = new javax.swing.GroupLayout(panelConsumos);
         panelConsumos.setLayout(panelConsumosLayout);
@@ -252,15 +323,15 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
             panelConsumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelConsumosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(scrollServicios1)
                 .addContainerGap())
         );
         panelConsumosLayout.setVerticalGroup(
             panelConsumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelConsumosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollServicios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelMantenimientoLayout = new javax.swing.GroupLayout(panelMantenimiento);
@@ -561,7 +632,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDevolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelPropietario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRegistroConsumo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 535, Short.MAX_VALUE)
+                    .addComponent(panelRegistroConsumo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                     .addComponent(scrollProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -697,7 +768,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(259, 259, 259)
                 .addComponent(panelCostos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -725,7 +796,8 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnFacturar;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JComboBox<String> comboEleccion;
-    private javax.swing.JList<String> listServicios;
+    private javax.swing.JList<Consumo> listConsumos;
+    private javax.swing.JList<Servicio> listServicios;
     private javax.swing.JPanel panelApellidos;
     private javax.swing.JPanel panelCantidadInsumo;
     private javax.swing.JPanel panelCodigoInsumo;
@@ -749,10 +821,9 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelTipoEquipo;
     private javax.swing.JPanel panelTotal;
     private javax.swing.JPanel panelVenta;
-    private javax.swing.JScrollPane scrollConsumos;
     private javax.swing.JScrollPane scrollProductos;
     private javax.swing.JScrollPane scrollServicios;
-    private javax.swing.JTable tablaConsumos;
+    private javax.swing.JScrollPane scrollServicios1;
     private javax.swing.JTable tablaProductos;
     private javax.swing.JLabel textTitulo;
     private javax.swing.JTextField txtApellidos;
