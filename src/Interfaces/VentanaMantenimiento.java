@@ -51,15 +51,15 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
             }
         });
 
-        listServicios.setModel(new ListModel<String>() {
+        listServicios.setModel(new ListModel<Servicio>() {
             @Override
             public int getSize() {
                 return serviciosLista.size();
             }
 
             @Override
-            public String getElementAt(int index) {
-                return serviciosLista.toString();
+            public Servicio getElementAt(int index) {
+                return serviciosLista.get(index);
             }
 
             @Override
@@ -521,7 +521,7 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> comboMarca;
     private javax.swing.JComboBox<String> comboServicios;
     private javax.swing.JComboBox<String> comboTipoEquipo;
-    private javax.swing.JList<String> listServicios;
+    private javax.swing.JList<Servicio> listServicios;
     private javax.swing.JPanel panelApellidos;
     private javax.swing.JPanel panelEquipo;
     private javax.swing.JPanel panelIdentificacion;

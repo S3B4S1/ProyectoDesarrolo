@@ -11,7 +11,7 @@ public class Negocio {
     private ArrayList<Producto> productos;
     private ArrayList<Venta> ventas;
     private ArrayList<Persona> tecnicos;
-    private ArrayList<Persona> clientes;
+    private ArrayList<Cliente> clientes;
     private ArrayList<Mantenimiento> mantenimientosR;
     private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
@@ -54,7 +54,7 @@ public class Negocio {
         return tecnicos;
     }
 
-    public ArrayList<Persona> getClientes() {
+    public ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
@@ -82,7 +82,7 @@ public class Negocio {
         this.tecnicos = tecnicos;
     }
 
-    public void setClientes(ArrayList<Persona> clientes) {
+    public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
     }
 
@@ -115,7 +115,7 @@ public class Negocio {
         this.mantenimientosP.add(mant);
     }
 
-    public void setTecnico(Persona tec) {
+    public void setMecanico(Persona tec) {
         this.tecnicos.remove(tec);
         this.tecnicos.add(tec);
     }
@@ -132,11 +132,18 @@ public class Negocio {
         this.servicios.add(servicio);
     }
 
-    public void addCliente(Persona cl) throws Exception {
+    public void addCliente(Cliente cl) throws Exception {
         if (clientes.contains(cl)) {
             throw new Exception("El cliente ya se encuentra registrado");
         }
         this.clientes.add(cl);
+    }
+
+    public void addProducto(Producto pd) throws Exception {
+        if (productos.contains(pd)) {
+            throw new Exception("El producto ya se encuentra registrado");
+        }
+        this.productos.add(pd);
     }
 
     public void addTecnico(Persona tec) throws Exception {
@@ -175,7 +182,7 @@ public class Negocio {
     }
 
     public Computador FindPc(String Serial) throws Exception {
-        for (Computador comp : computadores) {
+        for (Computador comp : this.computadores) {
             if (comp.getSerialEquipo().equals(Serial)) {
                 return comp;
             }
@@ -183,22 +190,25 @@ public class Negocio {
         throw new Exception("El computador no se encuentra registrado en la base"
                 + "de datos");
     }
-    
+
     public Mantenimiento findMantPend(String serial) throws Exception {
-        
-        for (Mantenimiento mant : this.mantenimientosP) 
+
+        for (Mantenimiento mant : this.mantenimientosP) {
             if (mant.getComputador().getSerialEquipo().toLowerCase().equals(serial.toLowerCase())) {
                 return mant;
             }
+        }
         throw new Exception("No se encontro el mantenimiento con el serial del equipo ingresada");
     }
-    
-    public Persona findCliente(long ident) throws Exception {
-        
-        for (Persona cliente : this.clientes)
-            if (cliente.getIdentificacion() == ident) {
-                return cliente;
+
+    public Producto findProducto(int codigo) throws Exception {
+
+        for (Producto prod : this.productos) {
+            if (prod.getCodigo() == codigo) {
+                return prod;
             }
-        throw new Exception("No se encontro el cliente");
+        }
+        throw new Exception("No se encontro el producto con el codigo ingresado");
     }
+
 }
