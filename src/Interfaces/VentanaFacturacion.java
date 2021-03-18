@@ -5,6 +5,7 @@ import Clases.Consumo;
 import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Persona;
+import Clases.Producto;
 import Clases.Servicio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,7 +112,16 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
         txtCodigoProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                
+                try {
+                    int cod = Integer.parseInt(txtCodigoProducto.getText());
+                    
+                    Producto prod = negocio.findProducto(cod);
+                    
+                    txtNombreProducto.setText(prod.getNombre());
+                    txtCostoProducto.setText(Float.toString(prod.getCosto()));
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
