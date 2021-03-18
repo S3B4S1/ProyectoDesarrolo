@@ -6,40 +6,211 @@
 package Interfaces;
 
 import Clases.Computador;
+import Clases.Consumo;
+import Clases.Mantenimiento;
 import Clases.Negocio;
+import Clases.Producto;
+import Clases.Servicio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Shadow
  */
 public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
+
     private Negocio negocio;
+    private Mantenimiento mantenimiento;
+    private ArrayList<Servicio> serviciosLista;
+    private ArrayList<Consumo> consumos;
 
     /**
      * Creates new form VentanaAsignacaion
      */
     public VentanaAsignacionConsumos(Negocio negocio) {
         this.negocio = negocio;
+        this.mantenimiento = mantenimiento;
+        this.serviciosLista = new ArrayList<>();
+        this.consumos = new ArrayList<>();
+
         initComponents();
+
+        btnAgregarInsumo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                try {
+                    int cantidad = Integer.parseInt(txtCantidad.getText());
+                    int codigo = Integer.parseInt(txtCodigoInsumo.getText());
+                    Producto producto = negocio.findProducto(codigo);
+                    Servicio servicio = listServicios.getSelectedValue();
+
+                    Consumo consumo = new Consumo(cantidad, servicio, producto);
+
+                    mantenimiento.addConsumo(consumo);
+
+                    JOptionPane.showMessageDialog(VentanaAsignacionConsumos.this, "El consumo fue agregado con exito");
+                    tablaConsumos.updateUI();
+
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaAsignacionConsumos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        tablaConsumos.setModel(new TableModel() {
+            @Override
+            public int getRowCount() {
+                return consumos.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 5;
+            }
+
+            @Override
+            public String getColumnName(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return "Codigo";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "Vlr. Unitario";
+                    case 3:
+                        return "Cantidad";
+                    case 4:
+                        return "Costo";
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return Integer.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return Integer.class;
+                    case 3:
+                        return Integer.class;
+                    case 4:
+                        return Double.class;
+                    default:
+                        return String.class;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return consumos.get(rowIndex).getProducto().getCodigo();
+                    case 1:
+                        return consumos.get(rowIndex).getProducto().getNombre();
+                    case 2:
+                        return consumos.get(rowIndex).getProducto().getCosto();
+                    case 3:
+                        return consumos.get(rowIndex).getCantidad();
+                    case 4:
+                        return consumos.get(rowIndex).getCantidad() * consumos.get(rowIndex).getProducto().getCosto();
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public void setValueAt(Object o, int rowIndex, int columnIndex) {
+            }
+
+            @Override
+            public void addTableModelListener(TableModelListener l) {
+            }
+
+            @Override
+            public void removeTableModelListener(TableModelListener l) {
+            }
+        });
+
+        txtCodigoInsumo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                try {
+                    int codigo = Integer.parseInt(txtCodigoInsumo.getText());
+
+                    Producto producto = negocio.findProducto(codigo);
+
+                    txtNombreInsumo.setText(producto.getNombre());
+                    txtCostoInsumo.setText(Float.toString(producto.getCosto()));
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaAsignacionConsumos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        listServicios.setModel(new ListModel<Servicio>() {
+            @Override
+            public int getSize() {
+                return serviciosLista.size();
+            }
+
+            @Override
+            public Servicio getElementAt(int i) {
+                return serviciosLista.get(i);
+            }
+
+            @Override
+            public void addListDataListener(ListDataListener l) {
+            }
+
+            @Override
+            public void removeListDataListener(ListDataListener l) {
+            }
+        });
+
         txtSerial.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) { 
+            public void actionPerformed(ActionEvent ae) {
                 try {
                     String serial = txtSerial.getText();
-                    
-                    Computador computador = negocio.FindPc(serial);
-                    
-                    
+
+                    mantenimiento = negocio.findMantPend(serial);
+                    serviciosLista = mantenimiento.getServicios();
+                    consumos = mantenimiento.getConsumos();
+                    listServicios.updateUI();
+
+                    txtCodigoInsumo.enable(true);
+                    txtCantidad.enable(true);
+
+                    txtMarca.setText(mantenimiento.getComputador().getMarca());
+                    txtTipoEquipo.setText(mantenimiento.getComputador().getSerialEquipo());
+                    txtTecnico.setText(mantenimiento.getTecnico().toString());
+
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
     }
 
     /**
@@ -76,7 +247,7 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
         btnAgregarInsumo = new javax.swing.JButton();
         panelConsumos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaConsumos = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -223,6 +394,8 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
 
         panelCodigoInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Codigo"));
 
+        txtCodigoInsumo.setEnabled(false);
+
         javax.swing.GroupLayout panelCodigoInsumoLayout = new javax.swing.GroupLayout(panelCodigoInsumo);
         panelCodigoInsumo.setLayout(panelCodigoInsumoLayout);
         panelCodigoInsumoLayout.setHorizontalGroup(
@@ -286,6 +459,7 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
         panelCantidadInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Cantidad"));
 
         txtCantidad.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtCantidad.setEnabled(false);
 
         javax.swing.GroupLayout panelCantidadInsumoLayout = new javax.swing.GroupLayout(panelCantidadInsumo);
         panelCantidadInsumo.setLayout(panelCantidadInsumoLayout);
@@ -341,7 +515,7 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
 
         panelConsumos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Lista de Consumos\n", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaConsumos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -352,7 +526,7 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaConsumos);
 
         javax.swing.GroupLayout panelConsumosLayout = new javax.swing.GroupLayout(panelConsumos);
         panelConsumos.setLayout(panelConsumosLayout);
@@ -410,8 +584,7 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarInsumo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JList<String> listServicios;
+    private javax.swing.JList<Servicio> listServicios;
     private javax.swing.JPanel panelCantidadInsumo;
     private javax.swing.JPanel panelCodigoInsumo;
     private javax.swing.JPanel panelConsumos;
@@ -419,20 +592,19 @@ public class VentanaAsignacionConsumos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelEquipo;
     private javax.swing.JPanel panelMarca;
     private javax.swing.JPanel panelNombreInsumo;
-    private javax.swing.JPanel panelNombreInsumo1;
     private javax.swing.JPanel panelRegistroConsumo;
     private javax.swing.JPanel panelSerial;
     private javax.swing.JPanel panelServicios;
     private javax.swing.JPanel panelTecnico;
     private javax.swing.JPanel panelTipoEquipo;
     private javax.swing.JScrollPane scrollServicios;
+    private javax.swing.JTable tablaConsumos;
     private javax.swing.JLabel textTitulo;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigoInsumo;
     private javax.swing.JTextField txtCostoInsumo;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombreInsumo;
-    private javax.swing.JTextField txtNombreInsumo1;
     private javax.swing.JTextField txtSerial;
     private javax.swing.JTextField txtTecnico;
     private javax.swing.JTextField txtTipoEquipo;
