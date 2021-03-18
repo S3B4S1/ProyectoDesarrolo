@@ -30,7 +30,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ventanaFacturacion == null) {
-                    ventanaFacturacion = new VentanaFacturacion();
+                    ventanaFacturacion = new VentanaFacturacion(negocio);
                     jDesktopPane1.add(ventanaFacturacion);
                 }
                 ventanaFacturacion.setVisible(true);
@@ -91,8 +91,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jDesktopPane1 = new javax.swing.JPanel();
         menuPrincipal = new javax.swing.JMenuBar();
         menuSolicitudes = new javax.swing.JMenu();
         menuNuevoIngreso = new javax.swing.JMenuItem();
@@ -104,12 +104,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuAyuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(3000, 2000));
+        setPreferredSize(new java.awt.Dimension(1200, 2000));
 
+        jDesktopPane1.setMaximumSize(new java.awt.Dimension(1200, 700));
+        jDesktopPane1.setMinimumSize(new java.awt.Dimension(1200, 700));
+        jDesktopPane1.setName(""); // NOI18N
+        jDesktopPane1.setPreferredSize(new java.awt.Dimension(1200, 2350));
         jDesktopPane1.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/cubos-digitales-3d-hd-870.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jDesktopPane1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        jScrollPane2.setViewportView(jDesktopPane1);
 
         menuPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         menuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -155,12 +158,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 2000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jScrollPane2.getAccessibleContext().setAccessibleParent(jDesktopPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -171,8 +178,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jDesktopPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem menuAsignarInsumos;
     private javax.swing.JMenuItem menuAsignarTecnico;
     private javax.swing.JMenu menuAyuda;

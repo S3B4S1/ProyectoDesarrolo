@@ -10,13 +10,14 @@ public class Persona {
     private String nombre;
     private String apellido;
     private EstaDisp estaDisp;
+    private String telefono;
     
 
-    public Persona(long identificacion, String nombre, String apellido) {
+    public Persona(long identificacion, String nombre, String apellido, String telefono) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.apellido = apellido;
-      
+        this.telefono = telefono;
     }
 
     public long getIdentificacion() {
@@ -37,6 +38,14 @@ public class Persona {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public void setApellido(String apellido) {

@@ -11,7 +11,7 @@ public class Negocio {
     private ArrayList<Producto> productos;
     private ArrayList<Venta> ventas;
     private ArrayList<Persona> tecnicos;
-    private ArrayList<Cliente> clientes;
+    private ArrayList<Persona> clientes;
     private ArrayList<Mantenimiento> mantenimientosR;
     private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
@@ -54,7 +54,7 @@ public class Negocio {
         return tecnicos;
     }
 
-    public ArrayList<Cliente> getClientes() {
+    public ArrayList<Persona> getClientes() {
         return clientes;
     }
 
@@ -82,7 +82,7 @@ public class Negocio {
         this.tecnicos = tecnicos;
     }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
+    public void setClientes(ArrayList<Persona> clientes) {
         this.clientes = clientes;
     }
 
@@ -115,7 +115,7 @@ public class Negocio {
         this.mantenimientosP.add(mant);
     }
 
-    public void setMecanico(Persona tec) {
+    public void setTecnico(Persona tec) {
         this.tecnicos.remove(tec);
         this.tecnicos.add(tec);
     }
@@ -132,7 +132,7 @@ public class Negocio {
         this.servicios.add(servicio);
     }
 
-    public void addCliente(Cliente cl) throws Exception {
+    public void addCliente(Persona cl) throws Exception {
         if (clientes.contains(cl)) {
             throw new Exception("El cliente ya se encuentra registrado");
         }
@@ -187,11 +187,18 @@ public class Negocio {
     public Mantenimiento findMantPend(String serial) throws Exception {
         
         for (Mantenimiento mant : this.mantenimientosP) 
-            if (mant.getComputador().getSerialEquipo().equals(serial.toLowerCase())) {
+            if (mant.getComputador().getSerialEquipo().toLowerCase().equals(serial.toLowerCase())) {
                 return mant;
             }
         throw new Exception("No se encontro el mantenimiento con el serial del equipo ingresada");
     }
     
-    
+    public Persona findCliente(long ident) throws Exception {
+        
+        for (Persona cliente : this.clientes)
+            if (cliente.getIdentificacion() == ident) {
+                return cliente;
+            }
+        throw new Exception("No se encontro el cliente");
+    }
 }
