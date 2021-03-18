@@ -11,7 +11,7 @@ public class Negocio {
     private ArrayList<Producto> productos;
     private ArrayList<Venta> ventas;
     private ArrayList<Persona> tecnicos;
-    private ArrayList<Cliente> clientes;
+    private ArrayList<Persona> clientes;
     private ArrayList<Mantenimiento> mantenimientosR;
     private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
@@ -54,7 +54,7 @@ public class Negocio {
         return tecnicos;
     }
 
-    public ArrayList<Cliente> getClientes() {
+    public ArrayList<Persona> getClientes() {
         return clientes;
     }
 
@@ -82,7 +82,7 @@ public class Negocio {
         this.tecnicos = tecnicos;
     }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
+    public void setClientes(ArrayList<Persona> clientes) {
         this.clientes = clientes;
     }
 
@@ -132,7 +132,7 @@ public class Negocio {
         this.servicios.add(servicio);
     }
 
-    public void addCliente(Cliente cl) throws Exception {
+    public void addCliente(Persona cl) throws Exception {
         if (clientes.contains(cl)) {
             throw new Exception("El cliente ya se encuentra registrado");
         }
