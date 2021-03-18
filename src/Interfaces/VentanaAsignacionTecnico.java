@@ -155,7 +155,7 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
                 mant.setTecnico(tec);
                 
                 negocio.setMantPend(mant);
-                negocio.setMecanico(tec);
+                negocio.setTecnico(tec);
                 
                 tecnicos = (ArrayList) negocio.TecnicosDisp();
                 tablaMantenimientos.updateUI();

@@ -1,9 +1,9 @@
 package Interfaces;
 
-import Clases.Cliente;
 import Clases.Computador;
 import Clases.Mantenimiento;
 import Clases.Negocio;
+import Clases.Persona;
 import Clases.Servicio;
 import Clases.TipoComputador;
 import java.awt.event.ActionEvent;
@@ -131,9 +131,8 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     Long Identificacion = Long.parseLong(txtIdentificacion.getText());
                     String Nombre = txtNombres.getText();
                     String Apellidos = txtApellidos.getText();
-                    Long Telefono = Long.parseLong(txtTelefono.getText());
-                    String Correo = txtCorreo.getText();
-                    Cliente cl = new Cliente(Telefono, Correo, Identificacion, Nombre, Apellidos);
+                    String Telefono = txtTelefono.getText();
+                    Persona cl = new Persona(Identificacion, Nombre, Apellidos, Telefono);
                     Computador pc = new Computador(Marca, Serial, Tipo, cl);
                     negocio.addCliente(cl);
                     negocio.addPc(pc);
@@ -147,7 +146,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     txtNombres.enable(false);
                     txtApellidos.enable(false);
                     txtTelefono.enable(false);
-                    txtCorreo.enable(false);
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
@@ -167,8 +165,7 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     txtIdentificacion.setText(Long.toString(computador.getPropietario().getIdentificacion()));
                     txtNombres.setText(computador.getPropietario().getNombre());
                     txtApellidos.setText(computador.getPropietario().getApellido());
-                    txtTelefono.setText(Long.toString(computador.getPropietario().getTelefono()));
-                    txtCorreo.setText(computador.getPropietario().getCorreo());
+                    txtTelefono.setText(computador.getPropietario().getTelefono());
 
                 } catch (Exception ex) {
                     Object[] opciones = {"Si, por favor", "No gracias"};
@@ -186,7 +183,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                         txtNombres.enable(true);
                         txtApellidos.enable(true);
                         txtTelefono.enable(true);
-                        txtCorreo.enable(true);
                     } else {
                         JOptionPane.showMessageDialog(VentanaMantenimiento.this, "Operacion abortada");
                     }
@@ -216,8 +212,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
         txtApellidos = new javax.swing.JTextField();
         panelTelefono = new javax.swing.JPanel();
         txtTelefono = new javax.swing.JTextField();
-        panelCorreo = new javax.swing.JPanel();
-        txtCorreo = new javax.swing.JTextField();
         btnRegistrarEquipo = new javax.swing.JButton();
         panelServicios = new javax.swing.JPanel();
         comboServicios = new javax.swing.JComboBox<>();
@@ -401,31 +395,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        panelCorreo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Correo"));
-
-        txtCorreo.setEnabled(false);
-        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCorreoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelCorreoLayout = new javax.swing.GroupLayout(panelCorreo);
-        panelCorreo.setLayout(panelCorreoLayout);
-        panelCorreoLayout.setHorizontalGroup(
-            panelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCorreoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelCorreoLayout.setVerticalGroup(
-            panelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtCorreo)
-        );
-
-        txtCorreo.getAccessibleContext().setAccessibleName("");
-
         javax.swing.GroupLayout panelPropietarioLayout = new javax.swing.GroupLayout(panelPropietario);
         panelPropietario.setLayout(panelPropietarioLayout);
         panelPropietarioLayout.setHorizontalGroup(
@@ -438,11 +407,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     .addComponent(panelApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(panelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelPropietarioLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         panelPropietarioLayout.setVerticalGroup(
             panelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,11 +419,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(panelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPropietarioLayout.createSequentialGroup()
-                    .addContainerGap(238, Short.MAX_VALUE)
-                    .addComponent(panelCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
         );
 
         btnRegistrarEquipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -553,10 +512,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
-
-    }//GEN-LAST:event_txtCorreoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarServicio;
@@ -568,7 +523,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> comboTipoEquipo;
     private javax.swing.JList<String> listServicios;
     private javax.swing.JPanel panelApellidos;
-    private javax.swing.JPanel panelCorreo;
     private javax.swing.JPanel panelEquipo;
     private javax.swing.JPanel panelIdentificacion;
     private javax.swing.JPanel panelMarca;
@@ -581,7 +535,6 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane scrollServicios;
     private javax.swing.JLabel textTitulo;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtIdentificacion;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtSerial;
