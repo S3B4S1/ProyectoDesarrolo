@@ -93,12 +93,25 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
         btnRegistrarCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                long ident = Long.parseLong(txtIdentificacion.getText());
-                String nombre = txtNombres.getText();
-                String apellido = txtApellidos.getText();
-                String telefono = txtTelefono.getText();
+                try {
+                    long ident = Long.parseLong(txtIdentificacion.getText());
+                    String nombre = txtNombres.getText();
+                    String apellido = txtApellidos.getText();
+                    String telefono = txtTelefono.getText();
+                    
+                    Persona cliente = new Persona(ident, nombre, apellido, telefono);
+                    
+                    negocio.addCliente(cliente);
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        txtCodigoProducto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 
-                Persona cliente = new Persona(ident, nombre, apellido, telefono);
+                
             }
         });
     }
