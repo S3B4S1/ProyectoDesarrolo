@@ -56,7 +56,6 @@ public class Main {
               t2.setEstaDisp(Persona.EstaDisp.No);
               t3.setEstaDisp(Persona.EstaDisp.Si);
               
-              
               negocio.addMantenimiento(m1);
               
               negocio.addTecnico(t1);

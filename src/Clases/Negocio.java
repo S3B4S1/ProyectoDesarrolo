@@ -183,4 +183,15 @@ public class Negocio {
         throw new Exception("El computador no se encuentra registrado en la base"
                 + "de datos");
     }
+    
+    public Mantenimiento findMantPend(String serial) throws Exception {
+        
+        for (Mantenimiento mant : this.mantenimientosP) 
+            if (mant.getComputador().getSerialEquipo().equals(serial.toLowerCase())) {
+                return mant;
+            }
+        throw new Exception("No se encontro el mantenimiento con el serial del equipo ingresada");
+    }
+    
+    
 }
