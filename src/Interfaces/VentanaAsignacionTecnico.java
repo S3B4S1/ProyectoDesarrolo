@@ -28,7 +28,7 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
         this.tecnicos = (ArrayList) negocio.TecnicosDisp();
 
         initComponents();
-        
+
         tablaMantenimientos.updateUI();
         comboTecnicos.updateUI();
 
@@ -45,7 +45,6 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
 
             @Override
             public String getColumnName(int columnIndex) {
-
                 switch (columnIndex) {
                     case 0:
                         return "Computador";
@@ -58,7 +57,6 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-
                 switch (columnIndex) {
                     case 0:
                         return String.class;
@@ -103,9 +101,9 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
         });
 
         comboTecnicos.setModel(new ComboBoxModel<Persona>() {
-            
+
             Persona tecnico;
-            
+
             @Override
             public void setSelectedItem(Object anItem) {
                 this.tecnico = (Persona) anItem;
@@ -129,17 +127,18 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
             @Override
             public void addListDataListener(ListDataListener l) {
             }
+
             @Override
             public void removeListDataListener(ListDataListener l) {
             }
         });
-        
+
         btnAsignarTecnico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 Persona tec = (Persona) comboTecnicos.getSelectedItem();
-                
+
                 if (tec == null) {
                     try {
                         throw new Exception("Debe seleccionar el tecnico que realizara el ");
@@ -147,23 +146,23 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
                         Logger.getLogger(VentanaAsignacionTecnico.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
                 tec.setEstaDisp(Persona.EstaDisp.No);
-                
+
                 Mantenimiento mant = (Mantenimiento) negocio.MantSinTecnicos().get(tablaMantenimientos.getSelectedRow());
-                
+
                 mant.setTecnico(tec);
-                
+
                 negocio.setMantPend(mant);
                 negocio.setMecanico(tec);
-                
+
                 tecnicos = (ArrayList) negocio.TecnicosDisp();
                 tablaMantenimientos.updateUI();
                 comboTecnicos.setSelectedIndex(-1);
                 comboTecnicos.updateUI();
             }
         });
-        
+
         btnActualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,11 +171,11 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     public void ActualizarTab() {
         tablaMantenimientos.updateUI();
     }
-    
+
     public void ActualizarTec() {
         comboTecnicos.updateUI();
         tecnicos = (ArrayList) negocio.TecnicosDisp();

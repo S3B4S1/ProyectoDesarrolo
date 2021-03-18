@@ -39,7 +39,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
               <Component id="panelCostos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="190" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -414,7 +414,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="scrollConsumos" pref="454" max="32767" attributes="0"/>
+                      <Component id="scrollConsumos" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

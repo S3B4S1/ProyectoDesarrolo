@@ -50,6 +50,8 @@ public class Main {
               
               Mantenimiento m1 = new Mantenimiento(pc1, null);
               
+              negocio.addProducto(p1);
+              
               m1.addServicio(s1);
               
               t1.setEstaDisp(Persona.EstaDisp.Si);

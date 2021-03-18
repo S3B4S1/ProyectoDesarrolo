@@ -56,19 +56,23 @@ public class Mantenimiento {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
-    
+
     public void addServicio(Servicio ser) {
         this.servicios.add(ser);
     }
-    
+
+    public void addConsumo(Consumo cons) {
+        this.consumos.add(cons);
+    }
+
     public String Servicios() {
-        
+
         String servicio = "";
-        
+
         for (Servicio ser : this.servicios) {
             servicio += ser.toString() + ", ";
         }
-        
+
         return servicio;
     }
 }

@@ -30,7 +30,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ventanaFacturacion == null) {
-                    ventanaFacturacion = new VentanaFacturacion();
+                    ventanaFacturacion = new VentanaFacturacion(negocio);
                     jDesktopPane1.add(ventanaFacturacion);
                 }
                 ventanaFacturacion.setVisible(true);
@@ -105,11 +105,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane1.setLayout(new java.awt.BorderLayout());
+        jDesktopPane1.setLayout(new javax.swing.OverlayLayout(jDesktopPane1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/cubos-digitales-3d-hd-870.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jDesktopPane1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        jDesktopPane1.add(jLabel1);
 
         menuPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         menuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -155,11 +155,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
         );
 
         pack();

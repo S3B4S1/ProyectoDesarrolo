@@ -252,7 +252,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
             panelConsumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelConsumosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollConsumos, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                .addComponent(scrollConsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelConsumosLayout.setVerticalGroup(
@@ -697,7 +697,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(259, 259, 259)
                 .addComponent(panelCostos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
