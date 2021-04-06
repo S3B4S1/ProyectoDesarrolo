@@ -1,10 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main;
 
+import Conection.Connection_Class;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import Clases.Computador;
 import Clases.Consumo;
 import Clases.Mantenimiento;
@@ -18,17 +17,26 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- *
- * @author S3B4S
- */
-public class Main {
-    
-    
+public class Main{
       public static void main(String args[]) {
-          try {
+          
+        Connection_Class cn=new Connection_Class();
+        Statement st;
+        ResultSet rs;
+        try{
+            st=cn.con.createStatement();
+            rs=st.executeQuery("select * from productos");
+            while(rs.next()){                
+                System.out.println(rs.getInt("Cod_producto")+" " +rs.getString("Nombre")+" " +rs.getLong("Precio"));
+            }
+            cn.con.close();
+        }catch(SQLException e){
+        }
+        
+        
+          try{
               Negocio negocio = new Negocio(1020L, "PCREADY");
+        /*
               Persona cl = new Persona(11111111, "sebastian", "Jaramillo", "3136433711");
               Persona cl2 = new Persona(11111112, "Joan", "Rosero", "3215469854");
               
@@ -67,13 +75,13 @@ public class Main {
               negocio.addCliente(cl2);
               negocio.addPc(pc);
               negocio.addPc(pc1);
-              
-              java.awt.EventQueue.invokeLater(new Runnable() {
-                  public void run() {
+        */
+              java.awt.EventQueue.invokeLater(new Runnable(){
+                  public void run(){
                       new VentanaPrincipal(negocio).setVisible(true);
                   }
               });
-          } catch (Exception ex) {
+          }catch(Exception ex){
               Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
           }
     }
