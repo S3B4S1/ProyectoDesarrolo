@@ -6,7 +6,17 @@ public class Servicio {
     private String nombre;
     private float costo;
 
-    public Servicio(int codigo, String nombre, float costo) {
+    public Servicio(int codigo, String nombre, float costo) throws Exception {
+        if (codigo <= 0) {
+            throw new Exception("El codigo del servicio no debe ser menor o igual a cero");
+        }
+        if (nombre == null || "".equals(nombre.trim())) {
+            throw new Exception("El nombre del servicio no debe estar vacio ni ser solo espacios");
+        }
+        if (costo <= 0) {
+            throw new Exception("El costo del servicio no debe ser menor o igual a cero");
+        }
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.costo = costo;

@@ -40,13 +40,13 @@ public class Venta {
     }
 
     public int getCostoVentaTotal() {
-        
+
         int a = 0;
-        
-        for(DetalleVenta dV : this.detalleVentas) {
+
+        for (DetalleVenta dV : this.detalleVentas) {
             a += dV.getCostoTotal();
         }
-        
+
         return CostoVentaTotal = a;
     }
 
@@ -58,4 +58,3 @@ public class Venta {
         this.detalleVentas.add(dV);
     }
 }
-

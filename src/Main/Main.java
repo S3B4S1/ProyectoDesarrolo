@@ -11,32 +11,31 @@ import Clases.Negocio;
 import Clases.Persona;
 import Clases.Producto;
 import Clases.Servicio;
-import Clases.TipoComputador;
 import Interfaces.VentanaPrincipal;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Main{
-      public static void main(String args[]) {
-          
-        Connection_Class cn=new Connection_Class();
+public class Main {
+
+    public static void main(String args[]) {
+
+        Connection_Class cn = new Connection_Class();
         Statement st;
         ResultSet rs;
-        try{
-            st=cn.con.createStatement();
-            rs=st.executeQuery("select * from productos");
-            while(rs.next()){                
-                System.out.println(rs.getInt("Cod_producto")+" " +rs.getString("Nombre")+" " +rs.getLong("Precio"));
+        try {
+            st = cn.con.createStatement();
+            rs = st.executeQuery("select * from productos");
+            while (rs.next()) {
+                System.out.println(rs.getInt("Cod_producto") + " " + rs.getString("Nombre") + " " + rs.getLong("Precio"));
             }
             cn.con.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
         }
-        
-        
-          try{
-              Negocio negocio = new Negocio(1020L, "PCREADY");
-        /*
+
+        try {
+            Negocio negocio = new Negocio(1020L, "PCREADY");
+            /*
               Persona cl = new Persona(11111111, "sebastian", "Jaramillo", "3136433711");
               Persona cl2 = new Persona(11111112, "Joan", "Rosero", "3215469854");
               
@@ -75,14 +74,14 @@ public class Main{
               negocio.addCliente(cl2);
               negocio.addPc(pc);
               negocio.addPc(pc1);
-        */
-              java.awt.EventQueue.invokeLater(new Runnable(){
-                  public void run(){
-                      new VentanaPrincipal(negocio).setVisible(true);
-                  }
-              });
-          }catch(Exception ex){
-              Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-          }
+             */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new VentanaPrincipal(negocio).setVisible(true);
+                }
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

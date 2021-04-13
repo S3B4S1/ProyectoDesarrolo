@@ -14,7 +14,14 @@ public class Mantenimiento {
     private int costoServicios = 0;
     private int CostoTotalMant;
 
-    public Mantenimiento(Computador computador, Persona tecnico) {
+    public Mantenimiento(Computador computador, Persona tecnico) throws Exception {
+        if (computador == null) {
+            throw new Exception("El mantenimiento debe poseer un computador");
+        }
+        if (servicios.size() == 0){
+            throw new Exception("El mantenimiento debe poseer servicios");
+        }
+
         this.computador = computador;
         this.tecnico = tecnico;
         this.fecha = LocalDate.now();
@@ -80,9 +87,9 @@ public class Mantenimiento {
     }
 
     public int getCostoConsumos() {
-        
+
         int a = 0;
-        
+
         for (Consumo con : this.consumos) {
             a += con.getCostoTotalCons();
         }
@@ -90,9 +97,9 @@ public class Mantenimiento {
     }
 
     public int getCostoServicios() {
-        
+
         int a = 0;
-                
+
         for (Servicio ser : this.servicios) {
             a += ser.getCosto();
         }

@@ -1,11 +1,12 @@
 package Interfaces;
 
+import Clases.Cliente;
 import Clases.Computador;
+import Clases.Computador.TipoComputador;
 import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Persona;
 import Clases.Servicio;
-import Clases.TipoComputador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
         this.mantenimiento = mantenimiento;
         this.servicios = negocio.getServicios();
         this.serviciosLista = new ArrayList<>();
-        
+
         initComponents();
 
         btnIngresarMantenimiento.addActionListener(new ActionListener() {
@@ -131,10 +132,10 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     Long Identificacion = Long.parseLong(txtIdentificacion.getText());
                     String Nombre = txtNombres.getText();
                     String Apellidos = txtApellidos.getText();
-                    String Telefono = txtTelefono.getText();
-                    Persona cl = new Persona(Identificacion, Nombre, Apellidos, Telefono);
-                    Computador pc = new Computador(Marca, Serial, Tipo, cl);
-                    negocio.addCliente(cl);
+                    Long Telefono = Long.parseLong(txtTelefono.getText());
+                    Cliente cliente = new Cliente(Identificacion, Nombre, Apellidos, Telefono, null);
+                    Computador pc = new Computador(Marca, Serial, Tipo, cliente);
+                    negocio.addCliente(cliente);
                     negocio.addPc(pc);
 
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, "El equipo fue registrado con exito");
@@ -165,7 +166,7 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     txtIdentificacion.setText(Long.toString(computador.getPropietario().getIdentificacion()));
                     txtNombres.setText(computador.getPropietario().getNombre());
                     txtApellidos.setText(computador.getPropietario().getApellido());
-                    txtTelefono.setText(computador.getPropietario().getTelefono());
+                    txtTelefono.setText(Long.toString(computador.getPropietario().getTelefono()));
 
                 } catch (Exception ex) {
                     Object[] opciones = {"Si, por favor", "No gracias"};

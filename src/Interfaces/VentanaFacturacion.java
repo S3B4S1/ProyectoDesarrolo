@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Clases.Cliente;
 import Clases.Consumo;
 import Clases.DetalleVenta;
 import Clases.Mantenimiento;
@@ -24,7 +25,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private ArrayList servicios = new ArrayList();
     private ArrayList consumos = new ArrayList();
     private ArrayList detalleVentas = new ArrayList();
-    
+
     public VentanaFacturacion(Negocio negocio) {
         this.negocio = negocio;
 
@@ -47,7 +48,7 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                     // }
                     listServicios.updateUI();
                     listConsumos.updateUI();
-                    
+
                     txtTotal.setText(Integer.toString(mant.getCostoTotalMant()));
                     txtIVA.setText(Integer.toString((int) (mant.getCostoTotalMant() * 0.19)));
                     txtSubtotal.setText(Integer.toString((int) ((mant.getCostoTotalMant() - (mant.getCostoTotalMant() * 0.19)))));
@@ -85,44 +86,42 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
                 long Ident = Long.parseLong(txtIdentificacion.getText());
                 try {
-                    Persona cliente = negocio.findCliente(Ident);
-                    
+                    Cliente cliente = (Cliente) negocio.findCliente(Ident);
+
                     txtNombres.setText(cliente.getNombre());
                     txtApellidos.setText(cliente.getApellido());
-                    txtTelefono.setText(cliente.getTelefono());
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
         btnRegistrarCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
                 try {
                     long ident = Long.parseLong(txtIdentificacion.getText());
                     String nombre = txtNombres.getText();
                     String apellido = txtApellidos.getText();
-                    String telefono = txtTelefono.getText();
-                    
-                    Persona cliente = new Persona(ident, nombre, apellido, telefono);
-                    
-                    
+                    Long telefono = Long.parseLong(txtTelefono.getText());
+
+                    Cliente cliente = new Cliente(ident, nombre, apellido, telefono, null);
+
                     negocio.addCliente(cliente);
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
         txtCodigoProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
                 try {
                     int cod = Integer.parseInt(txtCodigoProducto.getText());
-                    
+
                     Producto prod = negocio.findProducto(cod);
-                    
+
                     txtNombreProducto.setText(prod.getNombre());
                     txtCostoProducto.setText(Float.toString(prod.getCosto()));
                 } catch (Exception ex) {
@@ -130,34 +129,33 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 }
             }
         });
-        
+
         btnAgregarProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
                 try {
                     int cod = Integer.parseInt(txtCodigoProducto.getText());
                     int cant = Integer.parseInt(txtCantidad.getText());
-                    
+
                     Producto prod = negocio.findProducto(cod);
-                    
+
                     DetalleVenta dV = new DetalleVenta(cant, prod);
-                    
+
                     detalleVentas.add(dV);
-                    
+
                     //txtTotal.setText(Integer.toString(venta.getCostoVentaTotal()));
                     //txtIVA.setText(Integer.toString((int) (venta.getCostoVentaTotal() * 0.19)));
                     //txtSubtotal.setText(Integer.toString((int) (venta.getCostoVentaTotal() - (venta.getCostoVentaTotal() * 0.19))));
-                    
                     listProductos.updateUI();
-                    
+
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
         listProductos.setModel(new AbstractListModel<DetalleVenta>() {
-            
+
             public int getSize() {
                 return detalleVentas.size();
             }
@@ -166,11 +164,10 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                 return (DetalleVenta) detalleVentas.get(index);
             }
         });
-        
+
         btnFacturar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
-                
+
             }
         });
     }

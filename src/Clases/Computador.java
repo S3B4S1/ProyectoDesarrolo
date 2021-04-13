@@ -2,12 +2,29 @@ package Clases;
 
 public class Computador {
 
+    public static enum TipoComputador {
+        Portatil, Componente, Escritorio
+    }
+
     private String marca;
     private String serialEquipo;
     private TipoComputador tipoComputador;
-    private Persona propietario;
+    private Cliente propietario;
 
-    public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Persona propietario) {
+    public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Cliente propietario) throws Exception {
+        if (serialEquipo == null || "".equals(serialEquipo.trim())) {
+            throw new Exception("La serial del computador no debe estar vacia ni ser solo espacios");
+        }
+        if (marca == null || "".equals(marca.trim())) {
+            throw new Exception("La marca del computador no debe estar vacia ni ser solo espacios");
+        }
+        if (tipoComputador == null) {
+            throw new Exception("El computador debe debe tener un tipo");
+        }
+        if (propietario == null) {
+            throw new Exception("El computador debe tener un propietario");
+        }
+
         this.marca = marca;
         this.serialEquipo = serialEquipo;
         this.tipoComputador = tipoComputador;
@@ -26,7 +43,7 @@ public class Computador {
         return tipoComputador;
     }
 
-    public Persona getPropietario() {
+    public Cliente getPropietario() {
         return propietario;
     }
 
@@ -42,7 +59,7 @@ public class Computador {
         this.tipoComputador = tipoComputador;
     }
 
-    public void setPropietario(Persona propietario) {
+    public void setPropietario(Cliente propietario) {
         this.propietario = propietario;
     }
 

@@ -10,8 +10,8 @@ public class Negocio {
     private ArrayList<Servicio> servicios;
     private ArrayList<Producto> productos;
     private ArrayList<Venta> ventas;
-    private ArrayList<Persona> tecnicos;
-    private ArrayList<Persona> clientes;
+    private ArrayList<Tecnico> tecnicos;
+    private ArrayList<Cliente> clientes;
     private ArrayList<Mantenimiento> mantenimientosR;
     private ArrayList<Mantenimiento> mantenimientosP;
     private ArrayList<Computador> computadores;
@@ -50,11 +50,11 @@ public class Negocio {
         return ventas;
     }
 
-    public ArrayList<Persona> getTecnicos() {
+    public ArrayList<Tecnico> getTecnicos() {
         return tecnicos;
     }
 
-    public ArrayList<Persona> getClientes() {
+    public ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
@@ -78,11 +78,11 @@ public class Negocio {
         this.ventas = ventas;
     }
 
-    public void setTecnicos(ArrayList<Persona> tecnicos) {
+    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
         this.tecnicos = tecnicos;
     }
 
-    public void setClientes(ArrayList<Persona> clientes) {
+    public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
     }
 
@@ -115,7 +115,7 @@ public class Negocio {
         this.mantenimientosP.add(mant);
     }
 
-    public void setMecanico(Persona tec) {
+    public void setTecnico(Tecnico tec) {
         this.tecnicos.remove(tec);
         this.tecnicos.add(tec);
     }
@@ -132,7 +132,7 @@ public class Negocio {
         this.servicios.add(servicio);
     }
 
-    public void addCliente(Persona cl) throws Exception {
+    public void addCliente(Cliente cl) throws Exception {
         if (clientes.contains(cl)) {
             throw new Exception("El cliente ya se encuentra registrado");
         }
@@ -146,7 +146,7 @@ public class Negocio {
         this.productos.add(pd);
     }
 
-    public void addTecnico(Persona tec) throws Exception {
+    public void addTecnico(Tecnico tec) throws Exception {
         if (tecnicos.contains(tec)) {
             throw new Exception("El tecnico ya se encuentra registrado");
         }
@@ -173,8 +173,8 @@ public class Negocio {
 
         ArrayList listTD = new ArrayList();
 
-        for (Persona tec : this.tecnicos) {
-            if (tec.getEstaDisp().equals(tec.getEstaDisp().Si)) {
+        for (Tecnico tec : this.tecnicos) {
+            if (tec.getEstado().equals(tec.getEstado().Si)) {
                 listTD.add(tec);
             }
         }

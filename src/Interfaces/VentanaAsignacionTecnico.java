@@ -3,6 +3,7 @@ package Interfaces;
 import Clases.Mantenimiento;
 import Clases.Negocio;
 import Clases.Persona;
+import Clases.Tecnico;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -137,7 +138,7 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Persona tec = (Persona) comboTecnicos.getSelectedItem();
+                Tecnico tec = (Tecnico) comboTecnicos.getSelectedItem();
 
                 if (tec == null) {
                     try {
@@ -147,14 +148,14 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
                     }
                 }
 
-                tec.setEstaDisp(Persona.EstaDisp.No);
+                tec.setEstado(Tecnico.Estado.No);
 
                 Mantenimiento mant = (Mantenimiento) negocio.MantSinTecnicos().get(tablaMantenimientos.getSelectedRow());
 
                 mant.setTecnico(tec);
 
                 negocio.setMantPend(mant);
-                negocio.setMecanico(tec);
+                negocio.setTecnico(tec);
 
                 tecnicos = (ArrayList) negocio.TecnicosDisp();
                 tablaMantenimientos.updateUI();
