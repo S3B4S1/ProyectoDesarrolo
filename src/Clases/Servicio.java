@@ -1,23 +1,10 @@
 package Clases;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class Servicio {
 
-@Entity
-public class Servicio implements Serializable {
-
-    @Id
-    @Column(nullable = false)
     private int codigo;
-    @Column(nullable = false, length = 50)
     private String nombre;
-    @Column(nullable = false)
     private float costo;
-
-    public Servicio() {
-    }
 
     public Servicio(int codigo, String nombre, float costo) throws Exception {
         if (codigo <= 0) {

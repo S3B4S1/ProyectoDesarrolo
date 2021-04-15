@@ -1,30 +1,12 @@
 package Clases;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class Consumo {
 
-@Entity
-public class Consumo implements Serializable {
-
-    @Id()
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long pk;
-    @Column(nullable = false)
     private int cantidad;
-    @Column(nullable = false)
     private Servicio servicio;
-    @Column(nullable = false)
     private Producto producto;
-    @Column(nullable = false)
     private int costoTotalCons;
 
-    public Consumo() {
-    }
-    
     public Consumo(int cantidad, Servicio servicio, Producto producto) throws Exception {
         if (cantidad <= 0) {
             throw new Exception("La cantidad del consumo no puede ser menor o igual a cero");
@@ -44,14 +26,6 @@ public class Consumo implements Serializable {
 
     public int getCantidad() {
         return cantidad;
-    }
-
-    public long getPk() {
-        return pk;
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 
     public Servicio getServicio() {

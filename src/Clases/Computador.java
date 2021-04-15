@@ -1,30 +1,16 @@
 package Clases;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
-public class Computador implements Serializable {
+public class Computador {
 
     public static enum TipoComputador {
         Portatil, Componente, Escritorio
     }
 
-    @Column(nullable = false, length = 50)
     private String marca;
-    @Id
-    @Column(nullable = false, length = 50)
     private String serialEquipo;
-    @Column(nullable = false)
     private TipoComputador tipoComputador;
-    @Column(nullable = false)
     private Cliente propietario;
 
-    public Computador() {
-    }
-    
     public Computador(String marca, String serialEquipo, TipoComputador tipoComputador, Cliente propietario) throws Exception {
         if (serialEquipo == null || "".equals(serialEquipo.trim())) {
             throw new Exception("La serial del computador no debe estar vacia ni ser solo espacios");

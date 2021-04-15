@@ -1,28 +1,12 @@
 package Clases;
 
-import java.io.Serializable;
 import java.util.regex.Pattern;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
-public class DetalleVenta implements Serializable {
+public class DetalleVenta {
 
-    @Id()
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long pk;
-    @Column(nullable = false)
     private int cantidad;
-    @Column(nullable = false)
     private float costoTotal;
-    @Column(nullable = false)
     private Producto producto;
-
-    public DetalleVenta() {
-    }
 
     public DetalleVenta(int cantidad, Producto producto) throws Exception {
         if (producto == null) {
@@ -45,14 +29,6 @@ public class DetalleVenta implements Serializable {
 
     public int getCantidad() {
         return cantidad;
-    }
-
-    public long getPk() {
-        return pk;
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 
     public float getCostoTotal() {
