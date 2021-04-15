@@ -1,5 +1,6 @@
 package Main;
 
+import Clases.Cliente;
 import Conection.Connection_Class;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,19 +33,19 @@ public class Main {
             cn.con.close();
         } catch (SQLException e) {
         }
-
+     
         try {
             Negocio negocio = new Negocio(1020L, "PCREADY");
-            /*
-              Persona cl = new Persona(11111111, "sebastian", "Jaramillo", "3136433711");
-              Persona cl2 = new Persona(11111112, "Joan", "Rosero", "3215469854");
+            
+              Cliente cl = new Cliente(11111111, "sebastian", "Jaramillo", 3136433711L, "sebastian@gmail.com");
+              Cliente cl2 = new Cliente(11111112, "Joan", "Rosero", 3206545212L, "joan@gmail.com");
               
-              Computador pc = new Computador("Hp", "123456A",TipoComputador.Portatil, cl);
-              Computador pc1 = new Computador("Asus", "123456B",TipoComputador.Escritorio, cl2);
+              Computador pc = new Computador("Hp", "123456A",Computador.TipoComputador.Portatil, cl);
+              Computador pc1 = new Computador("Asus", "123456B",Computador.TipoComputador.Escritorio, cl2);
               
-              Persona t1 = new Persona(1234567, "Tecnico", "1", "3125469878");
-              Persona t2 = new Persona(1234568, "Tecnico", "2", "3654449878");
-              Persona t3 = new Persona(1234569, "Tecnico", "3", "3122229878");
+            //  Persona t1 = new Persona(1234567, "Tecnico", "1", "3125469878");
+             // Persona t2 = new Persona(1234568, "Tecnico", "2", "3654449878");
+             // Persona t3 = new Persona(1234569, "Tecnico", "3", "3122229878");
               
               Servicio s1 = new Servicio(1111, "Instalacion Windows 10", 50000);
               
@@ -59,9 +60,7 @@ public class Main {
               m1.addServicio(s1);
               
               
-              t1.setEstaDisp(Persona.EstaDisp.Si);
-              t2.setEstaDisp(Persona.EstaDisp.No);
-              t3.setEstaDisp(Persona.EstaDisp.Si);
+            
               
               negocio.addMantenimiento(m1);
               
@@ -74,7 +73,7 @@ public class Main {
               negocio.addCliente(cl2);
               negocio.addPc(pc);
               negocio.addPc(pc1);
-             */
+             
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     new VentanaPrincipal(negocio).setVisible(true);

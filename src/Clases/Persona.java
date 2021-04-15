@@ -1,13 +1,16 @@
 package Clases;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
-
-public class Persona {
-
+import javax.persistence.Entity;
+@Entity
+public class Persona implements Serializable{
+    
     private long identificacion;
     private String nombre;
     private String apellido;
 
+    
     public Persona(long identificacion, String nombre, String apellido) throws Exception {
         String strIdentificacion = Long.toString(identificacion);
         if (!(strIdentificacion.length() == 7 || strIdentificacion.length() == 8 || strIdentificacion.length() == 9 || strIdentificacion.length() == 10)) {
