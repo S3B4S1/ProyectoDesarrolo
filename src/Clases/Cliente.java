@@ -1,9 +1,19 @@
 package Clases;
 
-public class Cliente extends Persona {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+
+@Entity
+public class Cliente  extends Persona implements Serializable{
+    @Column(nullable = false)
     private Long telefono;
+    @Column(nullable = false)
     private String correo;
+
+    public Cliente() {
+    }
 
     public Cliente(long identificacion, String nombre, String apellido, long telefono, String correo) throws Exception {
         super(identificacion, nombre, apellido);

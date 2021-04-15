@@ -174,7 +174,7 @@ public class Negocio {
         ArrayList listTD = new ArrayList();
 
         for (Tecnico tec : this.tecnicos) {
-            if (tec.getEstado().equals(tec.getEstado().Si)) {
+            if (tec.isEstado()) {
                 listTD.add(tec);
             }
         }

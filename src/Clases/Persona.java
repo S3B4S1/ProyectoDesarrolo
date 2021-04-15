@@ -2,15 +2,23 @@ package Clases;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 @Entity
 public class Persona implements Serializable{
-    
+    @Id()
+    @Column(nullable = false)
     private long identificacion;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String apellido;
 
-    
+    public Persona() {
+    }
+
+     
     public Persona(long identificacion, String nombre, String apellido) throws Exception {
         String strIdentificacion = Long.toString(identificacion);
         if (!(strIdentificacion.length() == 7 || strIdentificacion.length() == 8 || strIdentificacion.length() == 9 || strIdentificacion.length() == 10)) {
