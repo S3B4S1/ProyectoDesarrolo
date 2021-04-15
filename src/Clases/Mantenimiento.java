@@ -1,18 +1,39 @@
 package Clases;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class Mantenimiento {
+@Entity
+public class Mantenimiento implements Serializable {
 
+    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long pk;
+    @Column(nullable = true)
     private ArrayList<Consumo> consumos = new ArrayList<>();
+    @Column(nullable = false)
     private ArrayList<Servicio> servicios = new ArrayList<>();
+    @Column(nullable = false)
     private Computador computador;
+    @Column(nullable = false)
     private Persona tecnico;
+    @Column(nullable = false)
     private LocalDate fecha;
+    @Column(nullable = false)
     private int costoConsumos = 0;
+    @Column(nullable = false)
     private int costoServicios = 0;
+    @Column(nullable = false)
     private int CostoTotalMant;
+
+    public Mantenimiento() {
+    }
 
     public Mantenimiento(Computador computador, Persona tecnico) throws Exception {
         if (computador == null) {
@@ -31,8 +52,28 @@ public class Mantenimiento {
         return consumos;
     }
 
+    public void setCostoConsumos(int costoConsumos) {
+        this.costoConsumos = costoConsumos;
+    }
+
+    public void setCostoServicios(int costoServicios) {
+        this.costoServicios = costoServicios;
+    }
+
+    public void setCostoTotalMant(int CostoTotalMant) {
+        this.CostoTotalMant = CostoTotalMant;
+    }
+
     public void setConsumos(ArrayList<Consumo> consumos) {
         this.consumos = consumos;
+    }
+
+    public long getPk() {
+        return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 
     public ArrayList<Servicio> getServicios() {
