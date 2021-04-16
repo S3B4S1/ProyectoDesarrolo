@@ -1,18 +1,38 @@
 package Clases;
 
+import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-public class Venta {
-
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+@Entity
+public class Venta implements Serializable{
+    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long pk;
+    @OneToMany
     private ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
+    @Column(nullable = false)
     private Persona cliente;
-    private LocalDateTime fecha;
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha;
+    @Column(nullable = false)
     private int CostoVentaTotal = 0;
+
+    public Venta() {
+    }
 
     public Venta(Persona cliente) {
         this.cliente = cliente;
-        this.fecha = LocalDateTime.now();
+        this.fecha = Date.from(Instant.now());
     }
 
     public ArrayList<DetalleVenta> getDetalleVentas() {
@@ -31,11 +51,11 @@ public class Venta {
         this.cliente = cliente;
     }
 
-    public LocalDateTime getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

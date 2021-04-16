@@ -148,7 +148,7 @@ public class VentanaAsignacionTecnico extends javax.swing.JInternalFrame {
                     }
                 }
 
-                tec.setEstado(Tecnico.Estado.No);
+                tec.setEstado(true);
 
                 Mantenimiento mant = (Mantenimiento) negocio.MantSinTecnicos().get(tablaMantenimientos.getSelectedRow());
 

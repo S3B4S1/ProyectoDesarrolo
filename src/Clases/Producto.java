@@ -1,9 +1,18 @@
 package Clases;
 
-public class Producto {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class Producto implements Serializable{
+    @Id()
+    @Column(nullable = false)
     private int codigo;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private float costo;
 
     public Producto(int codigo, String nombre, float costo) throws Exception {
