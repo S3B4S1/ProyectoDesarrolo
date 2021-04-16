@@ -38,16 +38,20 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
 
                 try {
                     Computador computador = negocio.FindPc(txtSerial.getText());
+                    if (serviciosLista.size() == 0) {
 
+                    JOptionPane.showMessageDialog(VentanaMantenimiento.this, "No se puede agregar un mantenimiento sin servicios");
+                    }else {
                     mantenimiento = new Mantenimiento(computador, null);
-
+                            }
                     mantenimiento.setServicios(serviciosLista);
 
-                    negocio.addMantenimiento(mantenimiento);
+                    negocio.addMantenimientoP(mantenimiento);
 
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, "El mantenimiento fue agregado con exito");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
+                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -85,6 +89,7 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
+                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -147,9 +152,11 @@ public class VentanaMantenimiento extends javax.swing.JInternalFrame {
                     txtNombres.enable(false);
                     txtApellidos.enable(false);
                     txtTelefono.enable(false);
-
+                     } catch (NumberFormatException xd ) {
+                         JOptionPane.showMessageDialog(VentanaMantenimiento.this, "No puede estar vacia la casilla de identificacion ni telefono ");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(VentanaMantenimiento.this, ex.getMessage());
+                    Logger.getLogger(VentanaMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }

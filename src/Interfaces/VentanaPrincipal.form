@@ -91,6 +91,13 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuVerMant">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver Mantenimientos"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

@@ -153,8 +153,16 @@ public class Negocio {
         this.tecnicos.add(tec);
     }
 
-    public void addMantenimiento(Mantenimiento mant) {
+    public void addMantenimientoP(Mantenimiento mant) {
         this.mantenimientosP.add(mant);
+    }
+    
+     public void addMantenimientoR(Mantenimiento mant) {
+        this.mantenimientosR.add(mant);
+    }
+     
+     public void addVenta(Venta v) {
+        this.ventas.add(v);
     }
 
     public List MantSinTecnicos() {
@@ -211,12 +219,16 @@ public class Negocio {
         throw new Exception("No se encontro el producto con el codigo ingresado");
     }
     
-    public Persona findCliente(long ident) throws Exception {
+    public Cliente findCliente(long ident) throws Exception {
         
-        for (Persona cliente : this.clientes)
+        for (Cliente cliente : this.clientes)
             if (cliente.getIdentificacion() == ident) {
                 return cliente;
             }
         throw new Exception("No se encontro el cliente");
+    }
+    
+    public void removeMantP(Mantenimiento mant) {
+        this.mantenimientosP.remove(mant);
     }
 }

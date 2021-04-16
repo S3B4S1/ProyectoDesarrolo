@@ -16,6 +16,7 @@ import javax.swing.Action;
  * @author Shadow
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
+
     private Negocio negocio;
 
     /**
@@ -50,7 +51,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         menuAsignarTecnico.addActionListener(new ActionListener() {
-            
+
             private VentanaAsignacionTecnico ventanaAsignacionTecnico = null;
 
             @Override
@@ -64,7 +65,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 ventanaAsignacionTecnico.ActualizarTec();
             }
         });
-        
+
         menuNuevoIngreso.addActionListener(new ActionListener() {
             private VentanaMantenimiento ventanaMantenimiento = null;
 
@@ -77,6 +78,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 }
                 ventanaMantenimiento.setVisible(true);
 
+            }
+        });
+
+        menuVerMant.addActionListener(new ActionListener() {
+            private AyudaUI ayudaUI = null;
+
+            public void actionPerformed(ActionEvent e) {
+                if (ayudaUI == null) {
+                    ayudaUI = new AyudaUI(negocio);
+                    jDesktopPane1.add(ayudaUI);
+                }
+                ayudaUI.setVisible(true);
+                ayudaUI.UpdateAyuda();
             }
         });
 
@@ -102,6 +116,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuFacturacion = new javax.swing.JMenu();
         menuNuevaFactura = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
+        menuVerMant = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,6 +163,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuAyuda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         menuAyuda.setText("Ayuda");
         menuAyuda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        menuVerMant.setText("Ver Mantenimientos");
+        menuAyuda.add(menuVerMant);
+
         menuPrincipal.add(menuAyuda);
 
         setJMenuBar(menuPrincipal);
@@ -171,7 +190,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jDesktopPane1;
@@ -185,5 +203,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuNuevoIngreso;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuSolicitudes;
+    private javax.swing.JMenuItem menuVerMant;
     // End of variables declaration//GEN-END:variables
 }
