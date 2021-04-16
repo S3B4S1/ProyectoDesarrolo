@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 
+
 @Entity
 public class Cliente  extends Persona implements Serializable{
     @Column(nullable = false)
