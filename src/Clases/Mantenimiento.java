@@ -18,9 +18,6 @@ public class Mantenimiento {
         if (computador == null) {
             throw new Exception("El mantenimiento debe poseer un computador");
         }
-        if (servicios.size() == 0){
-            throw new Exception("El mantenimiento debe poseer servicios");
-        }
 
         this.computador = computador;
         this.tecnico = tecnico;
@@ -108,5 +105,14 @@ public class Mantenimiento {
 
     public int getCostoTotalMant() {
         return CostoTotalMant = getCostoConsumos() + getCostoServicios();
+    }
+
+    @Override
+    public String toString() {
+
+        if (tecnico == null) {
+            return "Computador: " + computador.getMarca() + "  " + computador.getSerialEquipo()+ " Servicio: " + Servicios() + " Tecnico: Sin Asignar";
+        }
+        return "Computador: " + computador.getMarca() + "  " + computador.getSerialEquipo()+ " Servicio: " + Servicios() + " Tecnico: " + tecnico.getNombre();
     }
 }

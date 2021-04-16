@@ -8,12 +8,14 @@ import Clases.Negocio;
 import Clases.Persona;
 import Clases.Producto;
 import Clases.Servicio;
+import Clases.Venta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,12 +26,81 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
     private Negocio negocio;
     private ArrayList servicios = new ArrayList();
     private ArrayList consumos = new ArrayList();
-    private ArrayList detalleVentas = new ArrayList();
+    private ArrayList<DetalleVenta> detalleVentas = new ArrayList();
+    private Cliente cliente = null;
+    int total = 0;
+    int tipoFact = 0;
+
+    public void CompVenta(boolean b) {
+        txtIdentificacion.setEditable(b);
+        txtNombres.setEditable(b);
+        txtApellidos.setEditable(b);
+        txtTelefono.setEditable(b);
+        txtCodigoProducto.setEditable(b);
+        txtCantidad.setEditable(b);
+        btnBuscarCliente.setEnabled(b);
+        btnRegistrarCliente.setEnabled(b);
+        btnAgregarProducto.setEnabled(b);
+        btnDevolver.setEnabled(b);
+        listProductos.setEnabled(b);
+    }
+
+    public void CompMant(boolean b) {
+        txtSerial.setEditable(b);
+        listServicios.setEnabled(b);
+        listConsumos.setEnabled(b);
+    }
 
     public VentanaFacturacion(Negocio negocio) {
         this.negocio = negocio;
 
         initComponents();
+
+        CompMant(true);
+        CompVenta(false);
+
+        txtTotal.setEnabled(false);
+        txtSubtotal.setEnabled(false);
+        txtIVA.setEnabled(false);
+
+        comboEleccion.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                tipoFact = comboEleccion.getSelectedIndex();
+
+                if (tipoFact == 0) {
+                    CompMant(true);
+                    CompVenta(false);
+                    txtSerial.setText("");
+                    txtMarca.setText("");
+                    txtTipoEquipo.setText("");
+                    txtTotal.setText("");
+                    txtSubtotal.setText("");
+                    txtIVA.setText("");
+                    servicios = new ArrayList();
+                    consumos = new ArrayList();
+                    total = 0;
+                } else {
+                    CompMant(false);
+                    CompVenta(true);
+                    txtIdentificacion.setText("");
+                    txtNombres.setText("");
+                    txtApellidos.setText("");
+                    txtTelefono.setText("");
+                    txtCodigoProducto.setText("");
+                    txtCantidad.setText("");
+                    txtNombreProducto.setText("");
+                    txtCostoProducto.setText("");
+                    txtTotal.setText("");
+                    txtSubtotal.setText("");
+                    txtIVA.setText("");
+                    detalleVentas = new ArrayList();
+                    cliente = null;
+                    total = 0;
+                }
+            }
+        });
 
         txtSerial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -43,17 +114,43 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                     servicios = mant.getServicios();
                     consumos = mant.getConsumos();
 
-                    //if (mant.getTecnico() == null) {
-                    // throw new Exception("No se puede facturar un mantenimiento sin mecanico");
-                    // }
+                    if (mant.getTecnico() == null) {
+                        txtIdentificacion.setText("");
+                        txtNombres.setText("");
+                        txtApellidos.setText("");
+                        txtTelefono.setText("");
+                        txtCodigoProducto.setText("");
+                        txtCantidad.setText("");
+                        txtSerial.setText("");
+                        txtNombreProducto.setText("");
+                        txtCostoProducto.setText("");
+                        txtMarca.setText("");
+                        txtTipoEquipo.setText("");
+                        txtTotal.setText("");
+                        txtSubtotal.setText("");
+                        txtIVA.setText("");
+                        servicios = new ArrayList();
+                        consumos = new ArrayList();
+                        detalleVentas = new ArrayList();
+                        cliente = null;
+                        total = 0;
+                        listConsumos.updateUI();
+                        listProductos.updateUI();
+                        listServicios.updateUI();
+                        
+                        throw new Exception("No se puede facturar un mantenimiento sin tecnico");
+                    }
                     listServicios.updateUI();
                     listConsumos.updateUI();
 
                     txtTotal.setText(Integer.toString(mant.getCostoTotalMant()));
                     txtIVA.setText(Integer.toString((int) (mant.getCostoTotalMant() * 0.19)));
                     txtSubtotal.setText(Integer.toString((int) ((mant.getCostoTotalMant() - (mant.getCostoTotalMant() * 0.19)))));
+
                 } catch (Exception ex) {
-                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(VentanaFacturacion.this, ex.getMessage());
                 }
             }
         });
@@ -86,12 +183,16 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
                 long Ident = Long.parseLong(txtIdentificacion.getText());
                 try {
-                    Cliente cliente = (Cliente) negocio.findCliente(Ident);
+                    cliente = negocio.findCliente(Ident);
 
                     txtNombres.setText(cliente.getNombre());
                     txtApellidos.setText(cliente.getApellido());
+                    txtTelefono.setText(Long.toString(cliente.getTelefono()));
+
                 } catch (Exception ex) {
-                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(VentanaFacturacion.this, ex.getMessage());
                 }
             }
         });
@@ -105,11 +206,16 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
                     String apellido = txtApellidos.getText();
                     Long telefono = Long.parseLong(txtTelefono.getText());
 
-                    Cliente cliente = new Cliente(ident, nombre, apellido, telefono, null);
+                    cliente = new Cliente(ident, nombre, apellido, telefono, null);
 
                     negocio.addCliente(cliente);
+
+                    throw new Exception("Se registro el cliente");
+
                 } catch (Exception ex) {
-                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(VentanaFacturacion.this, ex.getMessage());
                 }
             }
         });
@@ -124,8 +230,10 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
                     txtNombreProducto.setText(prod.getNombre());
                     txtCostoProducto.setText(Float.toString(prod.getCosto()));
+
                 } catch (Exception ex) {
-                    Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -143,13 +251,23 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
 
                     detalleVentas.add(dV);
 
-                    //txtTotal.setText(Integer.toString(venta.getCostoVentaTotal()));
-                    //txtIVA.setText(Integer.toString((int) (venta.getCostoVentaTotal() * 0.19)));
-                    //txtSubtotal.setText(Integer.toString((int) (venta.getCostoVentaTotal() - (venta.getCostoVentaTotal() * 0.19))));
-                    listProductos.updateUI();
+                    total = 0;
+                    for (DetalleVenta dv : detalleVentas) {
+                        total += dv.getCostoTotal();
+                    }
 
-                } catch (Exception ex) {
+                    txtTotal.setText(Integer.toString(total));
+                    txtIVA.setText(Integer.toString((int) (total * 0.19)));
+                    txtSubtotal.setText(Integer.toString((int) (total - (total * 0.19))));
+
+                    listProductos.updateUI();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(VentanaFacturacion.this, "Debe ingresar valores numericos");
                     Logger.getLogger(VentanaFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(VentanaFacturacion.this, ex.getMessage());
                 }
             }
         });
@@ -165,9 +283,106 @@ public class VentanaFacturacion extends javax.swing.JInternalFrame {
             }
         });
 
+        btnDevolver.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    int i = listProductos.getSelectedIndex();
+
+                    detalleVentas.remove(i);
+
+                    total = 0;
+                    for (DetalleVenta dv : detalleVentas) {
+                        total += dv.getCostoTotal();
+                    }
+
+                    txtTotal.setText(Integer.toString(total));
+                    txtIVA.setText(Integer.toString((int) (total * 0.19)));
+                    txtSubtotal.setText(Integer.toString((int) (total - (total * 0.19))));
+
+                    listProductos.updateUI();
+
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         btnFacturar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+                try {
+                    if (tipoFact == 0) {
+                        String serial = txtSerial.getText();
+                        Mantenimiento mant = negocio.findMantPend(serial);
+
+                        negocio.removeMantP(mant);
+                        negocio.addMantenimientoR(mant);
+
+                        JOptionPane.showMessageDialog(VentanaFacturacion.this, "Se realizo la facturacion del mantenimiento");
+                    } else {
+                        Venta venta = new Venta(cliente);
+                        venta.setDetalleVentas(detalleVentas);
+
+                        negocio.addVenta(venta);
+
+                        JOptionPane.showMessageDialog(VentanaFacturacion.this, "Se realizo la facturacion de la venta");
+                    }
+                    txtIdentificacion.setText("");
+                    txtNombres.setText("");
+                    txtApellidos.setText("");
+                    txtTelefono.setText("");
+                    txtCodigoProducto.setText("");
+                    txtCantidad.setText("");
+                    txtSerial.setText("");
+                    txtNombreProducto.setText("");
+                    txtCostoProducto.setText("");
+                    txtMarca.setText("");
+                    txtTipoEquipo.setText("");
+                    txtTotal.setText("");
+                    txtSubtotal.setText("");
+                    txtIVA.setText("");
+                    servicios = new ArrayList();
+                    consumos = new ArrayList();
+                    detalleVentas = new ArrayList();
+                    cliente = null;
+                    total = 0;
+                    listConsumos.updateUI();
+                    listProductos.updateUI();
+                    listServicios.updateUI();
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaFacturacion.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                txtIdentificacion.setText("");
+                txtNombres.setText("");
+                txtApellidos.setText("");
+                txtTelefono.setText("");
+                txtCodigoProducto.setText("");
+                txtCantidad.setText("");
+                txtSerial.setText("");
+                txtNombreProducto.setText("");
+                txtCostoProducto.setText("");
+                txtMarca.setText("");
+                txtTipoEquipo.setText("");
+                txtTotal.setText("");
+                txtSubtotal.setText("");
+                txtIVA.setText("");
+                servicios = new ArrayList();
+                consumos = new ArrayList();
+                detalleVentas = new ArrayList();
+                cliente = null;
+                total = 0;
+                listConsumos.updateUI();
+                listProductos.updateUI();
+                listServicios.updateUI();
             }
         });
     }
