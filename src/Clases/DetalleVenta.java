@@ -17,7 +17,7 @@ public class DetalleVenta {
             Exception error = new Exception("Debe asignar la cantidad a comprar del producto");
             throw error;
         }
-        String strCantidad = Float.toString(cantidad);
+        String strCantidad = Integer.toString(cantidad);
         if (!Pattern.matches("[0-9]*", strCantidad)) {
             throw new Exception("La cantidad solo debe contener numeros");
         }
